@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>MonkeyEye电影售票系统-前端项目结构和协作规范 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Web" />
+    
+    <meta name="description" content="案例来源：SYSU SE305 课程大作业。互联网售票软件是比较常见的软件系统。通常由多个零售系统和多个供给系统系统。 机票、酒店房间、电影票似乎是风马牛大相关的系统，但它们之间存在极其相似的业务模型。 以电影票为例，格瓦拉、蜘蛛网、腾讯等等都做类似的电影票分销、推广业务，但票是由各大院线排期提供的。 分销-院线-影院形成了一个完整的生态体系。 本课程以大家熟悉的订票为例，学习分析、设计、开发的">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MonkeyEye电影售票系统-前端项目结构和协作规范">
+<meta property="og:url" content="http://hongchh.github.io/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="案例来源：SYSU SE305 课程大作业。互联网售票软件是比较常见的软件系统。通常由多个零售系统和多个供给系统系统。 机票、酒店房间、电影票似乎是风马牛大相关的系统，但它们之间存在极其相似的业务模型。 以电影票为例，格瓦拉、蜘蛛网、腾讯等等都做类似的电影票分销、推广业务，但票是由各大院线排期提供的。 分销-院线-影院形成了一个完整的生态体系。 本课程以大家熟悉的订票为例，学习分析、设计、开发的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hongchh.github.io/images/2017-06-09-1.png">
+<meta property="og:updated_time" content="2017-11-11T11:36:34.835Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MonkeyEye电影售票系统-前端项目结构和协作规范">
+<meta name="twitter:description" content="案例来源：SYSU SE305 课程大作业。互联网售票软件是比较常见的软件系统。通常由多个零售系统和多个供给系统系统。 机票、酒店房间、电影票似乎是风马牛大相关的系统，但它们之间存在极其相似的业务模型。 以电影票为例，格瓦拉、蜘蛛网、腾讯等等都做类似的电影票分销、推广业务，但票是由各大院线排期提供的。 分销-院线-影院形成了一个完整的生态体系。 本课程以大家熟悉的订票为例，学习分析、设计、开发的">
+<meta name="twitter:image" content="http://hongchh.github.io/images/2017-06-09-1.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">好好学习，天天向上！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-MonkeyEye电影售票系统-前端项目结构和协作规范" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        MonkeyEye电影售票系统-前端项目结构和协作规范
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="article-date">
+            <time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Web/">Web</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>案例来源：SYSU SE305 课程大作业。互联网售票软件是比较常见的软件系统。通常由多个零售系统和多个供给系统系统。 机票、酒店房间、电影票似乎是风马牛大相关的系统，但它们之间存在极其相似的业务模型。 以电影票为例，格瓦拉、蜘蛛网、腾讯等等都做类似的电影票分销、推广业务，但票是由各大院线排期提供的。 分销-院线-影院形成了一个完整的生态体系。 本课程以大家熟悉的订票为例，学习分析、设计、开发的方法。</p>
+</blockquote>
+<p>我所在的小组做的是一个叫做MonkeyEye的项目，实现一个简单的电影购票系统，并在项目完成过程中学习系统分析与设计，学习UML建模等技能。本系列文章将会以此项目为案例，总结整个项目的设计、建模与开发过程。</p>
+<p>前端项目地址：<a href="https://github.com/SYSUMonkeyEye/MonkeyEye-FE" target="_blank" rel="external">https://github.com/SYSUMonkeyEye/MonkeyEye-FE</a></p>
+<h1 id="一、基本功能"><a href="#一、基本功能" class="headerlink" title="一、基本功能"></a>一、基本功能</h1><ol>
+<li>电影资讯</li>
+<li>购票</li>
+<li>用户信息</li>
+<li>收藏</li>
+<li>评论</li>
+</ol>
+<p>用户使用该可以实现查看和搜索正在热映和即将上映的电影资讯，对感兴趣的电影可以进行收藏。想要观看某部电影，可以进行下单购票操作。对于已经放映的电影订单，用户可以对该订单对应的电影进行评分评价的操作。另外，用户还可以更新自己的个人信息。下面是整个应用的界面逻辑概要图，方便对应用有个直观的理解。</p>
+<p><img src="/images/2017-06-09-1.png" alt="界面流图"></p>
+<h1 id="二、项目结构"><a href="#二、项目结构" class="headerlink" title="二、项目结构"></a>二、项目结构</h1><h2 id="1、顶层结构"><a href="#1、顶层结构" class="headerlink" title="1、顶层结构"></a>1、顶层结构</h2><p>整个项目最顶层的包（文件夹）主要有以下4个。</p>
+<ol>
+<li><code>build</code>：运行提供开发环境和构建项目的代码</li>
+<li><code>config</code>：项目的webpack打包配置、http代理配置</li>
+<li><code>src</code>：项目的源代码，主要都在src里面进行开发</li>
+<li><code>dist</code>：项目构建后的产品文件</li>
+</ol>
+<p>无论是开发或者构建，都需要依赖到<code>config</code>里面的配置和<code>src</code>里面的源码。本项目使用<code>webpack</code>进行打包，<code>build</code>里面的代码会根据<code>config</code>的配置来调整<code>webpack</code>的打包规则，例如是否开启gzip、构建产品目标路径、HTTP代理规则等。调整好配置之后会将<code>src</code>里面的源码进行打包，如果是构建的话，由于<code>config</code>里面进行了设置，最终的产品文件都会存放到<code>dist</code>里面。</p>
+<p><img src="/images/2017-06-09-2.jpg" alt="结构和依赖关系"></p>
+<h2 id="2、src目录结构"><a href="#2、src目录结构" class="headerlink" title="2、src目录结构"></a>2、src目录结构</h2><p><code>src</code>里面主要分为<code>components</code>、<code>common</code>、<code>assets</code>、<code>router</code>和<code>store</code>这5个模块。本应用是一个前端单页应用，所以界面渲染、路由控制等操作都是在前端完成。每个页面抽象为一个组件，当然，界面中也可以包含它的子组件。这样，我们可以通过组件来定位每个界面的代码，方便管理。整个应用的数据都抽象到位于全局位置的<code>store</code>进行管理，实现界面和数据的分离，并且应用单向数据流的思想（后面介绍）。</p>
+<ol>
+<li><code>components</code>：所有界面组件</li>
+<li><code>common</code>：公共样式、组件或者工具函数</li>
+<li><code>assets</code>：图标、图片等静态资源</li>
+<li><code>router</code>：前端路由</li>
+<li><code>store</code>：应用数据状态</li>
+</ol>
+<p><img src="/images/2017-06-09-3.jpg" alt="结构和依赖关系"></p>
+<p>界面会引用到<code>common</code>里面的样式或工具，也可能引用<code>assets</code>的资源，例如引用某个图标。界面的路由配置和跳转控制需依赖<code>router</code>，而应用数据则是存储在<code>store</code>之中，因此也需要依赖到<code>store</code>。</p>
+<h2 id="3、细分目录结构"><a href="#3、细分目录结构" class="headerlink" title="3、细分目录结构"></a>3、细分目录结构</h2><p>根据设计图确定下来的应用界面，根据业务逻辑关联性大致可以分为6个部分，即前面【一】中展示的界面关系图中用红色框框起来的6个部分。电影资讯界面和个人中心界面分为同个部分的主要原因是它们作为进入应用之后的两个依赖tab切换的主界面，从代码上还是有所关联的，将它们的代码划分在同一个包中比较方便管理。</p>
+<p>公共包<code>common</code>的内容主要有公用的样式和工具函数，所以需要有<code>css、sass、utils</code>这几个包。<code>assets</code>由于目前只有少量静态图片资源，其他资源多数是从服务器动态加载，所以这里只需要一个<code>images</code>包。<code>router</code>里面已经不需要继续细分了，直接对前端路由规则进行配置即可。<code>store</code>里面可以根据数据继续划分为模块，每个模块对应一个js文件，存放在<code>module</code>包中，例如可以划分为电影模块、评论模块、订单模块等等。</p>
+<p><img src="/images/2017-06-09-4.jpg" alt="结构和依赖关系"></p>
+<h2 id="4、项目详细结构描述"><a href="#4、项目详细结构描述" class="headerlink" title="4、项目详细结构描述"></a>4、项目详细结构描述</h2><p>最后，结合各种入口文件和项目的技术框架需要的文件，可以确定项目需要的文件结构如下所示（具体到每个文件的详细描述）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">├─build：存放构建用到的相关文件</span><br><span class="line">├─config：存放配置文件</span><br><span class="line">├─data：存放伪数据以及数据生成器供前端开发使用；也可以存放图片等静态资源</span><br><span class="line">├─src：前端开发的源码</span><br><span class="line">│   ├─assets：图片等静态资源</span><br><span class="line">│   ├─common：公共样式或js文件</span><br><span class="line">│   │    ├─css：字体和图标文件</span><br><span class="line">│   │    │  ├─font.css：字体文件</span><br><span class="line">│   │    │  └─icon.css：图标文件</span><br><span class="line">│   │    ├─sass：公共样式文件</span><br><span class="line">│   │    └─utils：公共工具函数库</span><br><span class="line">│   │       ├─DateUtils.js：处理时间日期的工具函数</span><br><span class="line">│   │       ├─Form.js：表单工具函数</span><br><span class="line">│   │       └─LazyLoad.js：实现图片懒加载</span><br><span class="line">│   ├─components：前端组件</span><br><span class="line">│   │    ├─auth：登录注册相关界面</span><br><span class="line">│   │    │   ├─Load.vue：加载控件</span><br><span class="line">│   │    │   ├─Signin.vue：登录界面</span><br><span class="line">│   │    │   └─Signup.vue：注册界面</span><br><span class="line">│   │    ├─comment：电影评论评分相关界面</span><br><span class="line">│   │    │   └─MovieComment.vue：对电影进行评论评分界面</span><br><span class="line">│   │    ├─main：应用的主体界面</span><br><span class="line">│   │    │   ├─Main.vue：主体界面外层容器</span><br><span class="line">│   │    │   ├─Me.vue：个人中心界面</span><br><span class="line">│   │    │   └─Movies.vue：电影资讯界面</span><br><span class="line">│   │    ├─movie：电影相关界面</span><br><span class="line">│   │    │   ├─MovieDetail.vue：电影详情界面</span><br><span class="line">│   │    │   └─MovieSearch.vue：电影搜索界面</span><br><span class="line">│   │    ├─order：订单相关界面与组件</span><br><span class="line">│   │    │   ├─MyOrders.vue：全部/待付款/待放映/已放映订单列表界面</span><br><span class="line">│   │    │   ├─OrderDetail.vue：订单详情界面</span><br><span class="line">│   │    │   ├─OrderPay.vue：付款界面</span><br><span class="line">│   │    │   ├─PasswordInput.vue：支付密码输入控件</span><br><span class="line">│   │    │   ├─Reservation.vue：确认下单界面</span><br><span class="line">│   │    │   ├─SelectCoupon.vue：选优惠券界面</span><br><span class="line">│   │    │   ├─SelectScreen.vue：选场次界面</span><br><span class="line">│   │    │   └─SelectSeat.vue：选座位界面</span><br><span class="line">│   │    └─profile：用户中心相关界面</span><br><span class="line">│   │        ├─ChangeInfo.vue：修改个人信息界面</span><br><span class="line">│   │        ├─Coupon.vue：优惠券组件</span><br><span class="line">│   │        ├─Coupons.vue：优惠券列表界面</span><br><span class="line">│   │        ├─MovieCollection.vue：收藏/想看/已看电影列表界面</span><br><span class="line">│   │        └─UserInfo.vue：用户个人信息界面</span><br><span class="line">│   ├─router：前端路由</span><br><span class="line">│   │    └─index.js：前端路由信息配置文件</span><br><span class="line">│   ├─store：应用的全局数据状态管理</span><br><span class="line">│   │    ├─modules：数据状态模块</span><br><span class="line">│   │    │   ├─auth.js：登录注册相关接口与数据状态</span><br><span class="line">│   │    │   ├─comment.js：电影评价相关接口与数据状态</span><br><span class="line">│   │    │   ├─coupon.js：优惠券相关接口与数据状态</span><br><span class="line">│   │    │   ├─favorite.js：电影收藏相关接口与数据状态</span><br><span class="line">│   │    │   ├─movies.js：电影相关接口与数据状态</span><br><span class="line">│   │    │   ├─order.js：订单相关接口与数据状态</span><br><span class="line">│   │    │   └─screen.js：场次相关接口与数据状态</span><br><span class="line">│   │    └─index.js：数据状态模块配置文件</span><br><span class="line">│   ├─App.vue：应用的最外层结构</span><br><span class="line">│   └─entry.js：应用的入口文件；第三方组件和公共文件在此引入</span><br><span class="line">└─app-server.js：应用服务器，提供构建后的前端静态资源，并进行接口代理</span><br></pre></td></tr></table></figure></p>
+<h1 id="三、协作规范"><a href="#三、协作规范" class="headerlink" title="三、协作规范"></a>三、协作规范</h1><p>该项目使用<code>git</code>和<code>GitHub</code>进行协作开发和代码管理，<code>GitHub</code>上的代码仓库由我进行管理，其他成员需要<code>fork</code>项目然后通过在<code>GitHub</code>发起<code>pull request</code>的方式提交他们的代码。本仓库有2个分支，<code>master和dev</code>。主要在<code>dev</code>分支上进行开发和测试，功能完善之后再合并到<code>master</code>。<code>GitHub</code>上的代码量和提交次数统计只会统计<code>master</code>分支上的提交，所以有时候可能因为要统计成员活跃度的关系也需要合并一下<code>dev</code>的内容到<code>master</code>分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">├─master</span><br><span class="line">└─dev</span><br></pre></td></tr></table></figure></p>
+<p>首先需要在<code>github</code>上<code>fork</code>本仓库到他们自己的<code>github</code>，将<code>fork</code>之后的远程仓库克隆到本地，并在本地仓库上添加上游仓库，即源仓库。<code>fork</code>一般是<code>fork</code>了仓库的<code>master</code>分支，所以可能还需要自己去切出<code>dev</code>分支然后拉取源仓库<code>dev</code>分支上的内容。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/&#123;你的github&#125;/MonkeyEye-FE</span><br><span class="line"><span class="comment"># 上游的源仓库地址只需添加一次</span></span><br><span class="line">git remote add upstream https://github.com/SYSUMonkeyEye/MonkeyEye-FE</span><br><span class="line"><span class="comment"># 切出dev分支并拉取源仓库dev分支上的内容</span></span><br><span class="line">git checkout -b dev</span><br><span class="line">git pull upstream dev</span><br></pre></td></tr></table></figure></p>
+<p>完成之后便有了以下两种方式可以进行协作开发贡献代码。</p>
+<h2 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h2><p>要开发某个模块某个功能的时候，在你的本地仓库创建一个分支，例如<code>mydev</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b mydev</span><br></pre></td></tr></table></figure></p>
+<p>切换之后你的本地仓库上就有3个分支了，如下所示。<code>checkout</code>之后会自动切换到<code>mydev</code>分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├─master</span><br><span class="line">├─dev</span><br><span class="line">└─mydev</span><br></pre></td></tr></table></figure></p>
+<p>在<code>mydev</code>分支上进行开发和测试，完成相应的功能或者模块，完成之后再切回到<code>dev</code>分支将<code>mydev</code>的内容合并到<code>dev</code>。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mydev分支上提交你的更新</span></span><br><span class="line">git add *</span><br><span class="line">git commit -m <span class="string">"add something"</span></span><br><span class="line"><span class="comment"># 切换到dev分支</span></span><br><span class="line">git checkout dev</span><br></pre></td></tr></table></figure></p>
+<p>由于在你开发过程中，我也可能在开发并且更新了仓库，为了避免冲突，在合并分支之前你还需要更新你本地仓库的<code>dev</code>分支。先在本地仓库上添加上游仓库<code>upstream</code>，上游仓库即我的仓库，然后使用<code>pull</code>命令从上游仓库拉取更新。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取上游的源仓库dev分支上的更新</span></span><br><span class="line">git pull upstream dev</span><br></pre></td></tr></table></figure></p>
+<p>更新完<code>dev</code>之后，将<code>mydev</code>分支合并到<code>dev</code>分支并提交到你自己的远程仓库。完成之后，<code>mydev</code>分支就可以删除了，你也可以继续留着。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将mydev分支合并到dev，可能会有冲突需要自行解决</span></span><br><span class="line">git merge mydev</span><br><span class="line"><span class="comment"># 推送到你自己的远程仓库，注意这里是push到origin dev，不是upstream dev</span></span><br><span class="line">git push origin dev</span><br><span class="line"><span class="comment"># 删除mydev分支</span></span><br><span class="line">git branch -d mydev</span><br></pre></td></tr></table></figure></p>
+<p>推送到自己的远程仓库后，就可以到<code>Github</code>上面给我发<code>Pull Request</code>了，然后等待我合并你的代码。</p>
+<h2 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h2><p>方式二相对更简单一些，不用多次切换分支。可以直接在<code>fork</code>之后的的<code>dev</code>分支上面进行开发，然后在发送<code>PR</code>之前先从源仓库拉取更新。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提交你的代码</span></span><br><span class="line">git add *</span><br><span class="line">git commit -m <span class="string">"add something"</span></span><br><span class="line"><span class="comment"># 拉取上游的源仓库dev分支上的更新，可能会有冲突需要自行解决</span></span><br><span class="line">git pull upstream dev</span><br><span class="line"><span class="comment"># 推送到你自己的远程仓库，注意这里是push到origin dev，不是upstream dev</span></span><br><span class="line">git push origin dev</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://hongchh.github.io/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" data-id="cj9vb96h5001zm0tixt5rhwfw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            MonkeyEye电影售票系统-前端技术要点总结
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">axios-cookie问题和表单上传问题探究</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/30/Ajax文件上传/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-03-30-1.jpg)" alt="Ajax文件上传" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/30/Ajax文件上传/" class="title">Ajax文件上传</a></p>
+                            <p class="item-date"><time datetime="2017-03-30T14:11:23.000Z" itemprop="datePublished">2017-03-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 洪创煌</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

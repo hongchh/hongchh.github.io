@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>计算机网络应用层协议分析总结 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="计算机网络" />
+    
+    <meta name="description" content="1、应用层协议原理1.1、网络应用程序体系结构C/S结构，有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户机的主机请求。客户机主机既可能有时打开，也可能总是打开。C/S结构之下，客户机之间不直接通信。服务器有固定的IP地址。在C/S体系结构中，常用主机集群创建强大的虚拟服务器。基于C/S结构的应用服务通常是基础设施密集的(infrastrucuture intensive)。 P2P结">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络应用层协议分析总结">
+<meta property="og:url" content="http://hongchh.github.io/2016/09/21/计算机网络应用层协议分析总结/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="1、应用层协议原理1.1、网络应用程序体系结构C/S结构，有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户机的主机请求。客户机主机既可能有时打开，也可能总是打开。C/S结构之下，客户机之间不直接通信。服务器有固定的IP地址。在C/S体系结构中，常用主机集群创建强大的虚拟服务器。基于C/S结构的应用服务通常是基础设施密集的(infrastrucuture intensive)。 P2P结">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hongchh.github.io/images/2016-09-21-1.jpg">
+<meta property="og:updated_time" content="2017-11-11T05:25:00.718Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络应用层协议分析总结">
+<meta name="twitter:description" content="1、应用层协议原理1.1、网络应用程序体系结构C/S结构，有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户机的主机请求。客户机主机既可能有时打开，也可能总是打开。C/S结构之下，客户机之间不直接通信。服务器有固定的IP地址。在C/S体系结构中，常用主机集群创建强大的虚拟服务器。基于C/S结构的应用服务通常是基础设施密集的(infrastrucuture intensive)。 P2P结">
+<meta name="twitter:image" content="http://hongchh.github.io/images/2016-09-21-1.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">好好学习，天天向上！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-计算机网络应用层协议分析总结" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        计算机网络应用层协议分析总结
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/09/21/计算机网络应用层协议分析总结/" class="article-date">
+            <time datetime="2016-09-21T09:35:28.000Z" itemprop="datePublished">2016-09-21</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/计算机网络/">计算机网络</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="1、应用层协议原理"><a href="#1、应用层协议原理" class="headerlink" title="1、应用层协议原理"></a>1、应用层协议原理</h1><h2 id="1-1、网络应用程序体系结构"><a href="#1-1、网络应用程序体系结构" class="headerlink" title="1.1、网络应用程序体系结构"></a>1.1、网络应用程序体系结构</h2><p>C/S结构，有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户机的主机请求。客户机主机既可能有时打开，也可能总是打开。C/S结构之下，客户机之间不直接通信。服务器有固定的IP地址。在C/S体系结构中，常用主机集群创建强大的虚拟服务器。基于C/S结构的应用服务通常是基础设施密集的(infrastrucuture intensive)。</p>
+<p>P2P结构，任意间断连接的主机对(称为对等方)直接相互通信，不必通过专门的服务器。P2P结构的最突出特性之一是它的自扩展性(self-scalability)。</p>
+<h2 id="1-2、进程通信"><a href="#1-2、进程通信" class="headerlink" title="1.2、进程通信"></a>1.2、进程通信</h2><p>同一个端系统上的进程通过操作系统上的进程间通信机制相互通信。不同端系统上的进程通过跨越计算机网络交换报文(message)而相互通信。</p>
+<h3 id="客户机和服务器进程"><a href="#客户机和服务器进程" class="headerlink" title="客户机和服务器进程"></a>客户机和服务器进程</h3><p>对于每对通信进程，通常将这两个进程之一标示为客户机(client)，另一个标示为服务器(server)。标示的规则是，在给定的一对进程之间的通信回话中，发起通信的进程称为客户机，在会话开始时等待联系的进程是服务器。(P2P结构下一个进程既可以使服务器也可以是客户机)。</p>
+<h3 id="进程与计算机网络之间的接口"><a href="#进程与计算机网络之间的接口" class="headerlink" title="进程与计算机网络之间的接口"></a>进程与计算机网络之间的接口</h3><p>进程通过一个称为套接字(socket)的软件接口在网络上发送和接收报文。套接字是同一台主机内应用层与运输层之间的接口，是网络上建立网络应用程序的可编程接口，称为应用程序和网络之间的应用程序编程接口(API)。</p>
+<h2 id="1-3、可供应用程序使用的运输服务"><a href="#1-3、可供应用程序使用的运输服务" class="headerlink" title="1.3、可供应用程序使用的运输服务"></a>1.3、可供应用程序使用的运输服务</h2><h3 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h3><p>如果一个协议能够确保由应用程序的一端发送的数据正确地、完全地交付给该应用程序的另一端，那么该协议提供了可靠数据传输服务(reliable data transfer)。</p>
+<h3 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h3><p>两个进程在一条网络路径上进行通信会话时，可用吞吐量就是发送进程能够向接收进程交付比特的速率。因为其它会话将共享沿着该网络路径上的带宽，并且这些其它会话将会到达和离开，所以可用吞吐量将随时间波动。因此有了另一种服务，即运输层协议能够以某种特定的速率提供确保的可用吞吐量。</p>
+<h3 id="定时"><a href="#定时" class="headerlink" title="定时"></a>定时</h3><p>运输层协议也能提供定时保证，如同吞吐量保证一样，定时保证可以以多种形式实现。例如，可以设置发送方注入进套接字的每个比特到达接收方的套接字不迟于100ms。这种服务对交互式实时应用程序非常适用。</p>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><p>在发送主机中，运输层协议能够加密由发送进程传输的所有数据；在接收主机中，运输层协议能够在数据交付给接收进程之前解密这些数据。</p>
+<h2 id="1-4、因特网提供的传输服务"><a href="#1-4、因特网提供的传输服务" class="headerlink" title="1.4、因特网提供的传输服务"></a>1.4、因特网提供的传输服务</h2><p>因特网上的应用使用了两个运输层协议：UDP和TCP。</p>
+<h3 id="TCP服务"><a href="#TCP服务" class="headerlink" title="TCP服务"></a>TCP服务</h3><p><strong>面向连接服务：</strong> 使用TCP协议时，在应用层数据报文开始流动之前，其客户机程序和服务器程序之间相互交换运输层控制信息(握手过程)。握手阶段后，两个进程的套接字之间建立一个TCP连接，连接双方可以在此连接上同时进行报文收发。报文收发结束之后，该连接将被拆除。</p>
+<p><strong>可靠数据传输服务：</strong>进行通信的进程依靠TCP协议，无差错、按适当顺序交付发送的数据。</p>
+<p><strong>拥塞控制机制：</strong>发送方和接收方之间的网络出现拥塞时，TCP协议的拥塞机制会抑制发送进程。TCP协议的拥塞控制试图限制每个TCP连接，使它们达到公平共享网络带宽的目的。</p>
+<h3 id="UDP服务"><a href="#UDP服务" class="headerlink" title="UDP服务"></a>UDP服务</h3><p>UDP是一种不提供不必要服务的轻量级运输层协议。它是无连接的，两个进程通信前没有握手过程。UDP协议提供的是不可靠数据传输服务，也就是说，当进程通过UDP套接字发送报文时，UDP协议不保证该报文能够被接收进程收到。此外，接收进程收到报文的顺序也可能是乱序的。UDP协议没有拥塞控制机制。</p>
+<h3 id="TCP和UDP的安全问题"><a href="#TCP和UDP的安全问题" class="headerlink" title="TCP和UDP的安全问题"></a>TCP和UDP的安全问题</h3><p>TCP和UDP都没有提供任何加密机制，发送进程传送至套接字的数据与经过网络传送到目的进程的数据相同。如果某个进程以明文方式将一个口令传送至它的套接字，该明文口令将经过发送方和接收方之间的所有链路传送，这就可能在任何中间链路被嗅探和发现。</p>
+<p>由于存在种种隐私和其他安全问题，人们研制了TCP的加强版本，称为安全套接字层(Secure Socket Layer, SSL)。SSL不是独立于TCP和UDP的第三种协议，而只是对TCP的增强。这种增强是在应用层上实现的。如果一个应用程序要使用SSL的服务，它需要在其客户机和服务器中都包括SSL的代码。</p>
+<h3 id="进程寻址"><a href="#进程寻址" class="headerlink" title="进程寻址"></a>进程寻址</h3><p>为了识别接收进程，需要定义两种信息：主机名称或地址；目的主机上接收进程的标识。在因特网中，主机是用IP地址进行标识的。目的地端口号则用于标识接收进程。</p>
+<h1 id="2、web应用和HTTP协议"><a href="#2、web应用和HTTP协议" class="headerlink" title="2、web应用和HTTP协议"></a>2、web应用和HTTP协议</h1><h2 id="2-1、HTTP概况"><a href="#2-1、HTTP概况" class="headerlink" title="2.1、HTTP概况"></a>2.1、HTTP概况</h2><p>web的应用层协议是产文本传输协议(HyperText Transfer Protocol, HTTP)。HTTP协议由两部分程序实现：一个客户机程序和一个服务器程序，它们运行在不同的端系统中，通过交换HTTP报文进行会话。HTTP定义了这些报文的格式以及客户机和服务器是如何进行报文交换的。</p>
+<p>HTTP使用TCP作为它的支撑运输层协议。客户机发起一个与服务器的TCP连接，一旦连接建立，浏览器和服务器进程就可以通过套接字接口访问TCP。HTTP是一个无状态协议(stateless protocol)，一个HTTP服务器并不保存关于客户机的任何信息。</p>
+<h2 id="2-2、非持久连接和持久连接"><a href="#2-2、非持久连接和持久连接" class="headerlink" title="2.2、非持久连接和持久连接"></a>2.2、非持久连接和持久连接</h2><p>在许多因特网应用中，客户机和服务器进行长时间通信，其中客户机发出一系列请求，服务器对每个请求进行响应。根据不同的应用程序以及应用程序的使用方式，这一系列请求可以周期性地一个接一个发出，也可以间断地发出。当客户机/服务器的交互运行于TCP协议之上时，应用程序的研制者需要确定每个请求/响应对是经一个单独的TCP连接发送，还是所有的请求及响应经相同的TCP连接发送。如果采取前一种方法，该应用程序使用非持久连接(non-persistent connection)；如果采用后一种方法，该应用程序使用持久连接(persistent connection)。HTTP既可以使用非持久连接，也可以使用持久连接，默认方式下HTTP使用持久连接。</p>
+<h3 id="非持久连接"><a href="#非持久连接" class="headerlink" title="非持久连接"></a>非持久连接</h3><p>在非持久连接的情况下，访问一个网页(假设该网页中还有引用了其他静态资源，如css,js,img等等)会经过下面几个步骤：</p>
+<ul>
+<li>【1】 HTTP客户机进程发起一个到服务器的TCP连接。客户机和服务器上分别有一个socket与该连接相关联。</li>
+<li>【2】 HTTP客户机经它的套接字向服务器发送一个HTTP请求报文。</li>
+<li>【3】 HTTP服务器进程经它的套接字接受该请求报文，从其存储器中检索出请求对象，在一个HTTP相应报文中封装对象，并通过其套接字向客户机发送响应报文。</li>
+<li>【4】 HTTP服务器进程通知TCP断开该TCP连接(直到TCP确认客户机已经完整地接受到响应报文为止，它才会真正中断连接)。</li>
+<li>【5】 HTTP客户机接受响应报文，TCP连接关闭。</li>
+<li>【6】 对其他资源都重复前面几个步骤</li>
+</ul>
+<p>上面整个过程中，每次访问一个对象(资源)都会重新建立一次TCP连接。浏览器和服务器之间发起一次TCP连接，涉及到一个”三次握手”的过程，即客户机向服务器发送一个小TCP报文段，服务器拥抱一个小TCP报文段做出确认和响应，最后，客户机向服务器返回确认。一个RTT(Round-Trip Time，即一个分组从客户机到服务器再回到客户机所花费的时间)等于三次握手中前两个部分所耗费的时间。完成三次握手的前两个部分之后，客户机将三次握手的第三个部分(确认)与一个HTTP请求报文结合起来发送到该TCP连接。一旦该请求报文到达服务器，服务器向该TCP连接发送响应报文。该请求/响应又消耗一个RTT。因此，粗略地讲，总的响应时间就是两个RTT加上服务器传输响应报文的时间。</p>
+<p><img src="/images/2016-09-21-1.jpg" alt="发起连接过程"></p>
+<p>非持久连接必须为每一个请求的对象建立和维护一个全新的连接。对于每个这样的连接，在客户机和服务器都要分配TCP的缓冲区和变量，这给服务器带来了严重的负担。其次，每个对象的传输时延为两个RTT。</p>
+<h3 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h3><p>在持久连接的情况下，服务器在发送响应后保持该TCP连接打开。在相同的客户机与服务器之间的后续请求和响应报文可通过相同的连接进行传送。一般来说，如果一个连接经过一定时间间隔仍未被使用，HTTP服务器就关闭该连接。HTTP的默认模式使用了流水线方式的持久连接。</p>
+<h2 id="2-3、HTTP报文格式"><a href="#2-3、HTTP报文格式" class="headerlink" title="2.3、HTTP报文格式"></a>2.3、HTTP报文格式</h2><h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /somedir/page.html HTTP/1.1</span><br><span class="line">Host: www.someschool.edu</span><br><span class="line">Connection: close</span><br><span class="line">User-agent: Mozilla/4.0</span><br><span class="line">Accept-language: fr</span><br></pre></td></tr></table></figure>
+<p>上面是一个请求报文的示例。HTTP请求报文第一行叫做请求行(request line)，其后继的行叫做首部行(header line)。请求行有3个字段：方法、URL、HTTP协议版本。首部行包含了请求的一些基本信息。在通用的HTTP请求报文格式中，首部行后面可能还有实体主体(entity body)。使用GET方法时，实体主体为空；而使用POST方法时，提交的数据信息会放在这个实体主体中。</p>
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Connection: close</span><br><span class="line">Date: Thu, 03 Jul 2003 12:00:15 GMT</span><br><span class="line">Server: Apache/1.3.0 (Unix)</span><br><span class="line">Last-Modified: Sun, 6 May 2007 09:23:24 GMT</span><br><span class="line">Content-Length: 6821</span><br><span class="line">Content-Type: text/html</span><br><span class="line"></span><br><span class="line">(data data data ...)</span><br></pre></td></tr></table></figure>
+<p>上面是一个HTTP响应报文的示例。响应报文分成3部分：状态行(status line)、首部行(header line)、实体主体(entity body)。状态行有3个字段：协议版本、状态码、响应状态信息。首部行则包含了一些基本信息。实体主体部分是报文的主体，包含所请求的对象本身。下面是一些常见的状态码和状态信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">200 OK: 请求成功，信息包含在返回的响应报文中</span><br><span class="line">301 Moved Permanently: 请求对象已经被永久转移了</span><br><span class="line">400 Bad Request: 请求不能被服务器理解</span><br><span class="line">404 Not Found: 请求的文档不在服务器上</span><br><span class="line">505 HTTP Version Not Supported: 服务器不支持请求报文使用的HTTP协议版本</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-4、cookie"><a href="#2-4、cookie" class="headerlink" title="2.4、cookie"></a>2.4、cookie</h2><p>HTTP协议是无状态的，为了能够识别用户，HTTP使用cookie这项技术。cookie技术有4个组成部分：</p>
+<ul>
+<li>【1】在HTTP响应报文中有一个cookie首部行</li>
+<li>【2】在HTTP请求报文中有一个cookie首部行</li>
+<li>【3】在用户端系统中保留有一个cookie文件，由用户浏览器管理</li>
+<li>【4】web站点有一个后台数据库</li>
+</ul>
+<h3 id="cookie的工作过程"><a href="#cookie的工作过程" class="headerlink" title="cookie的工作过程"></a>cookie的工作过程</h3><ol>
+<li>客户端访问一个网站</li>
+<li>请求报文到达服务器</li>
+<li>服务器产生一个唯一识别码</li>
+<li>以此识别码作为索引在数据库中产生一个表项</li>
+<li>服务器用一个包含Set-cookie首部行的HTTP响应报文对客户端进行响应，Set-cookie首部行含有识别码</li>
+<li>客户端接收到响应报文，看到Set-cookie首部</li>
+<li>浏览器在它管理的特定cookie文件中添加报文中的识别码</li>
+<li>客户端继续向服务器请求页面，这时浏览器会从cookie文件中提取识别码并放置到请求报文的cookie首部行中</li>
+<li>服务器根据请求报文中的cookie信息识别用户</li>
+<li>客户端后续每次向服务器发送请求都将重复8、9两步直到cookie被删除</li>
+</ol>
+<p><img src="/images/2016-09-21-2.jpg" alt="cookie工作流程"></p>
+<h2 id="2-5、web缓存"><a href="#2-5、web缓存" class="headerlink" title="2.5、web缓存"></a>2.5、web缓存</h2><p>web缓存器(web cache)也叫代理服务器(proxy server)，它是能够代表初始web服务器来满足HTTP请求的网络实体。web缓存器有自己的磁盘存储空间，并在该存储空间中保存最近请求过的网络实体。它既可以是客户机也可以是服务器。主要的工作流程如下：</p>
+<ul>
+<li>【1】浏览器建立一个到web缓存器的TCP连接并向web缓存器中的对象发送一个HTTP请求</li>
+<li>【2】web缓存器检查本地是否存储了该对象的拷贝。如果有，web缓存器就用HTTP响应报文向客户机浏览器返回该对象</li>
+<li>【3】如果web缓存器没有该对象，它将与该对象的初始服务器打开一个TCP连接，然后发送获取对象的HTTP请求。收到请求后，初始服务器向web缓存器发送具有该对象的HTTP响应</li>
+<li>【4】当web缓存器接收该对象时，它在本地存储空间存储该对象的拷贝，并用HTTP响应报文向客户机浏览器发送该对象</li>
+</ul>
+<p><img src="/images/2016-09-21-3.jpg" alt="web缓存机制"></p>
+<p>部署web缓存器有两个原因：减少客户机请求的响应时间；减少一个机构内部网与因特网接入链路的通信量，从而减少带宽，降低费用。</p>
+<h2 id="2-6、条件GET方法"><a href="#2-6、条件GET方法" class="headerlink" title="2.6、条件GET方法"></a>2.6、条件GET方法</h2><p>尽管高速缓存能减少用户感受到的响应时间，但也引入了一个新的问题，即存放在缓存器上的对象可能不是最新的。保存在服务器中的对象在该拷贝缓存在客户机后可能已经被修改了。幸运的是，HTTP协议有一种机制，允许缓存器证实它的对象是最新的。这种机制就是条件GET(conditional GET)方法。条件GET请求包含下面两个特性：使用GET方法；报文中包含一个If-modified-since首部行。其工作流程如下：</p>
+<ul>
+<li>【1】缓存器向服务器发送一个请求报文</li>
+<li>【2】服务器向缓存器发送具有被请求对象的响应报文，其中包含Last-Modified首部行</li>
+<li>【3】缓存器存储该对象同时也存储了Last-Modified中描述的最后修改时间</li>
+<li>【4】一段时间过后，客户机向缓存器发送请求报文来请求对象</li>
+<li>【5】缓存器接收到客户机的报文之后，向服务器发送一个条件GET方法确认对象是否最新</li>
+<li>【6】服务器检查，发送缓存的对象还是最新的之后，向缓存发送一个状态为304(Not Modified)的响应</li>
+<li>【7】缓存器接收到响应确认最新之后再将对象发送给客户机</li>
+<li>【8】如果服务器检查发现缓存对象不是最新的，则向缓存器发送响应报文同时把最新的对象附在报文的实体主体中传送</li>
+<li>【9】缓存器接受响应报文之后更新缓存对象并发送给客户机</li>
+</ul>
+<h1 id="3、文件传输协议：FTP"><a href="#3、文件传输协议：FTP" class="headerlink" title="3、文件传输协议：FTP"></a>3、文件传输协议：FTP</h1><p>FTP运行在TCP上，使用两个并行的TCP连接来传输文件，一个是控制连接(control connection)，一个是数据连接(data connection)。控制连接用于在两个主机之间传输控制信息，如用户标识、口令、改变远程目录的命令以及”put”和”get”文件的命令。数据连接用于实际传输一个文件。因为FTP协议使用一个分离的控制链接，所以我们也称FTP的控制信息是带外(out-of-band)传送的。</p>
+<p><img src="/images/2016-09-21-4.jpg" alt="FTP传输图例"></p>
+<p>当用户主机与远程主机开始一个FTP会话前，FTP的客户机首先在21号端口上向服务器发起一个用于控制的TCP连接。FTP的客户机通过该控制连接发送用户的标识和口令，也发送改变远程目录的命令。当FTP服务器从控制连接上收到一个文件传输命令后，就会发起一个到客户机的数据连接。FTP在该数据连接上准确地传送一个文件后关闭该连接。如果在同一会话期间，用户还需要传输另外一个文件，FTP则打开另一个数据连接。因此对FTP传输而言，控制连接贯穿了整个用户会话期间，但是针对会话中的每一次文件传输都需要建立一个新的数据连接(即数据连接是非持久的)。</p>
+<p>FTP服务器必须在整个会话期间保留用户的状态(state)信息。</p>
+<h1 id="4、因特网中的电子邮件"><a href="#4、因特网中的电子邮件" class="headerlink" title="4、因特网中的电子邮件"></a>4、因特网中的电子邮件</h1><p>电子邮件系统主要由3各部分组成：用户代理(user agent)、邮件服务器(mail server)和简单邮件传输协议(Simple Mail Transfer Protocol, SMTP)。用户代理允许用户阅读、回复、转发、保存和撰写报文。邮件服务器是电子邮件系统结构的核心。一个典型的发送邮件过程如下：发送方的用户代理向其所在的邮件服务器发送邮件，该邮件被放在邮件服务器的发送报文队列中，邮件从发送方的邮件服务器发送到接收方的邮件服务器，接收方的用户代理从它所在的邮件服务器中获取邮件。</p>
+<p>SMTP是因特网电子邮件中主要的应用层协议。它使用TCP可靠数据传输服务，从发送方的邮件服务器向接收方的邮件服务器发送邮件。SMTP有两个部分：运行在发送方邮件服务器的客户机和运行在接收端邮件服务器的服务端。每个邮件服务器上既有SMTP客户机也有SMTP服务器。</p>
+<p><img src="/images/2016-09-21-5.jpg" alt="电子邮件系统"></p>
+<h2 id="4-1、简单邮件传输协议–SMTP"><a href="#4-1、简单邮件传输协议–SMTP" class="headerlink" title="4.1、简单邮件传输协议–SMTP"></a>4.1、简单邮件传输协议–SMTP</h2><p>SMTP一般不适用中间邮件服务器发送邮件。例如，A的邮件服务器再中国广东，B的邮件服务器在美国西海岸，当A向B发送邮件的时候，发起的TCP连接是直接从中国广东连接到美国西海岸，中间不经过其他服务器。如果B的服务器没有开机，那么邮件会保留在A的服务器上并在稍后继续进行新的发送尝试，也就是说，该邮件不会在中间某个其他邮件服务器上存留。</p>
+<p>SMTP发报过程：客户机在25端口建立一个到服务器的TCP连接，如果服务器没有开机，客户机会在稍后继续尝试连接。连接建立之后，服务器和客户机执行一些应用层的握手。在握手阶段，SMTP客户机指明发送方的邮件地址和接收方的邮件地址。握手阶段结束后，客户机开始发送邮件报文。SMTP可以利用TCP提供的可靠数据传输无差错地将邮件投递到接收方的服务器。SMTP使用的是持久连接，该客户机如果还有另外的报文要发送到该服务器，也会在同一个TCP连接上进行发送；否则，TCP连接会被关闭。</p>
+<h2 id="4-2、邮件访问协议"><a href="#4-2、邮件访问协议" class="headerlink" title="4.2、邮件访问协议"></a>4.2、邮件访问协议</h2><p>前面介绍了邮件服务器之间利用SMTP协议传送邮件的过程。现在，我们继续来看用户代理与邮件服务器之间是如何传输的。A向B发邮件时，A的用户代理会利用SMTP协议把邮件推送到其所在的邮件服务器，邮件服务器再利用SMTP协议将邮件发送给B所在的邮件服务器。这里我们会发现一个细节，这里有两个步骤使用了SMTP协议。为什么要这么做呢？主要原因是，如果从A的用户代理直接用SMTP协议向B所在的邮件服务器发送邮件，那么A的邮件可能无法被B接收到。因为B的邮件服务器可能关机了，通过先从用户代理将邮件发送到A的邮件服务器上之后，邮件缓存在A的服务器上并由服务器去不断尝试给B的服务器发送邮件直到成功。这样用户在自己的电脑上发送完邮件之后就不用继续关注邮件的发送过程了，也就是说不用一直开着电脑了，由服务器去帮助完成这些事情即可。</p>
+<p>邮件到达B的邮件服务器之后，会缓存在服务器上，等待B的用户代理来访问获取邮件。注意，这里B的用户代理不能用SMTP协议去向服务器取回邮件，因为取邮件是一个拉操作，而SMTP是一个推协议。于是邮件访问协议横空出世，该协议将B所在的邮件服务器上的邮件传送给B的电脑上的用户代理。目前有多个流行的邮件访问协议，包括第三版邮局协议(Post Office Protocol-Version 3, POP3)、因特网邮件访问协议(Internet Mail Access Protocol, IMAP)以及HTTP。最后，整个邮件发送和接收过程如下图所示：</p>
+<p><img src="/images/2016-09-21-6.jpg" alt="邮件发送接收过程"></p>
+<h1 id="5、DNS：因特网的目录服务"><a href="#5、DNS：因特网的目录服务" class="headerlink" title="5、DNS：因特网的目录服务"></a>5、DNS：因特网的目录服务</h1><p>主机的识别方式有两种：主机名和IP地址。主机名可以方便人们记住，而路由器则喜欢格式化的IP地址。域名系统(Domain Name System, DNS)的主要任务就是实现主机名到IP地址的映射转换。DNS是一个由分层的DNS服务器实现的分布式数据库，是一个允许主机查询分布式数据库的应用层协议。</p>
+<p>与HTTP、FTP、SMTP协议一样，DNS协议也是应用层协议。它运行在UDP之上，使用客户机/服务器模式在通信的端系统之间运行，在通信的端系统之间通过下面的端到端运输层协议来传送DNS报文。DNS通常由其他应用层协议(包括HTTP、FTP、SMTP)所使用，用于将用户提供的主机名解析为IP地址。假设某用户用浏览器访问某一个网站，DNS的工作流程如下：</p>
+<ul>
+<li>【1】用户主机上运行着DNS应用的客户端</li>
+<li>【2】浏览器从URL中提取出要访问的网站的主机名，将主机名传送给本机的DNS客户端</li>
+<li>【3】DNS客户端向DNS服务器发送一个包含主机名的请求</li>
+<li>【4】DNS客户端收到一份来自服务器的回答报文，其中包含对应于主机名的IP地址</li>
+<li>【5】浏览器向对应的IP地址定位的HTTP服务器发起一个TCP连接</li>
+</ul>
+<p>除了主机名到IP地址的转换外，DNS还提供了一些重要服务：主机别名(host aliasing)、邮件服务器别名(mail server aliasing)、负载分配(load distribution)。</p>
+<h2 id="5-1、负载分配概述"><a href="#5-1、负载分配概述" class="headerlink" title="5.1、负载分配概述"></a>5.1、负载分配概述</h2><p>繁忙的站点可能被冗余分布在多台服务器上，每台服务器均运行在不同的端系统上，有着不同的IP地址。对于这些冗余的web服务器，一个IP地址集合对应于同一个规范主机名。DNS数据库中存储着这些IP地址集合。当客户机为映射到这个IP地址集合的名字发出一个DNS请求时，该服务器用包含全部这些地址的报文进行回答，但在每个回答中旋转这些地址排放的顺序。因为客户机通常总是向IP地址排在最前面的服务器发送HTTP请求，所以DNS就在所有这些冗余web服务器之间旋转分配负载。DNS的旋转同样适用于邮件服务器。</p>
+<h2 id="5-2、DNS工作机理概述"><a href="#5-2、DNS工作机理概述" class="headerlink" title="5.2、DNS工作机理概述"></a>5.2、DNS工作机理概述</h2><h3 id="分布式、层次数据库"><a href="#分布式、层次数据库" class="headerlink" title="分布式、层次数据库"></a>分布式、层次数据库</h3><p>DNS使用了大量服务器，它们以层次方式组织，并且分布在全世界范围内。没有一台DNS服务器具有因特网上所有主机的映射，相反，该映射分布在所有的DNS服务器上。DNS服务器有3种类型：根DNS服务器、顶级域(Top-Level Domain, TLD)DNS服务器和权威DNS服务器。这些DNS服务器的层次结构如下图所示。</p>
+<p><img src="/images/2016-09-21-7.jpg" alt="DNS服务器层次结构"></p>
+<p>当一个DNS客户机想要获取IP地址时，它首先会从根服务器那边联系，根服务器返回TLD服务器的IP地址，DNS客户机根据IP地址继续去跟对应的TLD服务器联系，TLD服务器返回权威服务器的IP地址，这样一层一层找下去直到获取到相应主机的IP地址。</p>
+<p>除了根、TLD和权威DNS服务器之外，还有另一类服务器，本地DNS服务器(local DNS server)。每个ISP都有一台本地DNS服务器。当主机与某个ISP连接时，该ISP提供一台主机的IP地址，该主机具有一台或多台其他本地DNS服务器的地址。</p>
+<h3 id="DNS缓存"><a href="#DNS缓存" class="headerlink" title="DNS缓存"></a>DNS缓存</h3><p>为了改善时延性能并减少在因特网上到处传输的DNS报文数量，DNS广泛使用了缓存技术。当一个DNS服务器接收一个DNS回答时，DNS服务器能将回答中的信息缓存在本地存储器。如果在DNS服务器中缓存了一个主机名/IP地址对，另一个对相同主机名的查询到达该服务器时，该服务器就能马上提供所要求的IP地址，即使它不是该主机名的权威服务器。由于主机和主机名与IP地址见的映射关系不是永久的，所以DNS服务器在一段时间后会将缓存信息丢弃。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://hongchh.github.io/2016/09/21/计算机网络应用层协议分析总结/" data-id="cj9vb96gk0017m0ti86j0zis9" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/24/【动态规划】带权值区间调度问题/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            【动态规划】带权值区间调度问题
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/09/19/稳定匹配问题与GS算法-单身狗脱单秘籍/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">稳定匹配问题与GS算法-单身狗脱单秘籍</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/30/Ajax文件上传/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-03-30-1.jpg)" alt="Ajax文件上传" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/30/Ajax文件上传/" class="title">Ajax文件上传</a></p>
+                            <p class="item-date"><time datetime="2017-03-30T14:11:23.000Z" itemprop="datePublished">2017-03-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 洪创煌</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

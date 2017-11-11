@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>计算机网络概述 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="计算机网络" />
+    
+    <meta name="description" content="1、基本概念主机(host)，或者称为端系统(end system)，通过通信链路(communication link)和分组交换机(packet switch)连接到一起。链路的传输速率是以bps度量，当一台端系统有数据要向另一台端系统发送时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包称为分组(packet)。 从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络概述">
+<meta property="og:url" content="http://hongchh.github.io/2016/09/11/计算机网络概述/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="1、基本概念主机(host)，或者称为端系统(end system)，通过通信链路(communication link)和分组交换机(packet switch)连接到一起。链路的传输速率是以bps度量，当一台端系统有数据要向另一台端系统发送时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包称为分组(packet)。 从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-11T04:21:14.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络概述">
+<meta name="twitter:description" content="1、基本概念主机(host)，或者称为端系统(end system)，通过通信链路(communication link)和分组交换机(packet switch)连接到一起。链路的传输速率是以bps度量，当一台端系统有数据要向另一台端系统发送时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包称为分组(packet)。 从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">好好学习，天天向上！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-计算机网络概述" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        计算机网络概述
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/09/11/计算机网络概述/" class="article-date">
+            <time datetime="2016-09-11T01:05:13.000Z" itemprop="datePublished">2016-09-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/计算机网络/">计算机网络</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="1、基本概念"><a href="#1、基本概念" class="headerlink" title="1、基本概念"></a>1、基本概念</h1><p>主机(host)，或者称为端系统(end system)，通过通信链路(communication link)和分组交换机(packet switch)连接到一起。链路的传输速率是以bps度量，当一台端系统有数据要向另一台端系统发送时，发送端系统将数据分段，并为每段加上首部字节。由此形成的信息包称为分组(packet)。</p>
+<p>从发送端系统到接收端系统，一个分组所经历的一系列通信链路和分组交换机称为通过该网络的路径(route或path)。</p>
+<p>端系统通过因特网服务提供商(Internet Service Provider, ISP)接入因特网。每个ISP是一个由多个分组交换机和多段通信链路组成的网络。</p>
+<p>通过网络链路和交换机移动数据有两种基本方法：电路交换(circuit switching)和分组交换(packet switching)。在电路交换网络中，沿着端系统通讯路径，为端系统之间通信所提供的资源(缓存、链路传输速率)在通信会话期间会被预留。在分组交换网络中，这些资源则不会被预留，会话的报文按需使用这些资源，排队等待接入通信线路。</p>
+<h1 id="2、电路交换"><a href="#2、电路交换" class="headerlink" title="2、电路交换"></a>2、电路交换</h1><p>电路交换：每条链路都有n条电路，能够支持n条电路同时连接。每台主机都与一台交换机直接连接。当两台主机要通信时，该网络在两台主机之间创建一条专用的端到端连接(end-to-end connection)。因为每条链路具有n条电路，每条链路由端到端连接使用，该连接在连接期间获得该链路带宽的1/n部分。</p>
+<p>电路交换网络中的多路复用：链路中的电路要么通过频分多路复用(Frequency-Division Multiplexing, FDM)实现，要么通过时分多路复用(Time-Division Multiplexing, TDM)实现。对于FDM，链路的频谱由跨越链路创建的所有连接所共享，该链路在连接期间为每条连接专用一个频段，这个频段的宽度称为带宽(bandwidth)。对于TDM，时间被划分成固定区间的帧，并且每帧又被划分成固定数量的时隙。当网络跨越一条链路创建一条连接时，该网络在每个帧中为该连接指定一个时隙。这些时隙专门由该连接单独使用，用于传输该连接的数据。</p>
+<h1 id="3、分组交换"><a href="#3、分组交换" class="headerlink" title="3、分组交换"></a>3、分组交换</h1><p>多数分组交换机在链路的输入端使用存储转发传输(store-and-forward transmission)机制。存储转发传输机制是指在交换机能够开始向输出链路传输该分组的第一个bit之前，必须接受到整个分组。因此，存储转发式分组交换机沿着该分组的路径在每条链路的输入端引入了存储转发时延。考虑从一台主机经分组交换网络向另一台主机发送一个L比特分组需要多长时间。假定在这两台主机之间有Q段链路，每段链路的速率为R bps。假定这是该网络中的唯一分组。从主机A发出的该分组首先传输到第一段链路上，这需要L/R s。然后它在余下的Q-1段链路上传输，即它必须存储和转发Q-1次，每次都有L/R的存储转发时延，因此总时延为QL/R。</p>
+<p>每个分组交换机有多条链路与之项链，对于每条项链的链路，该分组交换机具有一个输出缓存(output buffer，也称输出队列，output queue)，用于存储路由器准备发往那条链路的分组。如果到达的分组需要跨越链路传输，但发现该链路整忙于传输其他分组，该到达分组必须在输出缓存中等待。因此，除了存储转发时延以外，分组还要承受输出缓存的排队时延(queue delay)。这些时延是变化的，变化程度取决于网络中的拥塞水平。因为缓存空间的大小是有限的，所以一个到达的分组可能发现该缓存被等待传输的分组完全占满了，这种情况下将出现分组丢失(也称为丢包，packet lost)。</p>
+<h1 id="4、分组交换和电路交换对比"><a href="#4、分组交换和电路交换对比" class="headerlink" title="4、分组交换和电路交换对比"></a>4、分组交换和电路交换对比</h1><p>分组交换因其端到端时延是变动且不可预测的，故不适合实时服务(例如，电话和视频会议)。</p>
+<p>分组交换提供了比电路交换更好的带宽共享，比电路交换更简单、更有效、成本更低。</p>
+<h1 id="5、分组是怎样通过分组交换网形成其通路"><a href="#5、分组是怎样通过分组交换网形成其通路" class="headerlink" title="5、分组是怎样通过分组交换网形成其通路"></a>5、分组是怎样通过分组交换网形成其通路</h1><p>在因特网中，每个通过该网络传输的分组在它的首部包含了其目的地址，该地址是一种层次结构，当分组到达网络中的一台路由器时，该路由器检查分组的目的地址的一部分，冰箱相邻路由器转发该分组。每个路由器具有一个转发表用于将目的地址(或目的地址的一部分)映射到输出链路。当分组到达一台路由器时，该路由器检查目的地址，并用这个目的地址搜索转发表，以找到合适的输出链路。然后，路由器将该分组导向输出链路。</p>
+<h1 id="6、分组交换网中的时延概述"><a href="#6、分组交换网中的时延概述" class="headerlink" title="6、分组交换网中的时延概述"></a>6、分组交换网中的时延概述</h1><p>当分组从一个节点(主机或路由器)沿着这条路径到后继节点时，该分组在沿途的每个节点都经受了几种不同类型的时延。这些时延中最为重要的就是节点处理时延(nodal processing delay)、排队时延(queuing delay)、传输时延(transmission delay)和传播时延(propagation delay)，这些时延总体累加起来是节点总时延(total nodal delay)。</p>
+<h2 id="6-1、处理时延"><a href="#6-1、处理时延" class="headerlink" title="6.1、处理时延"></a>6.1、处理时延</h2><p>检查分组首部和决定将该分组导向何处所需的时间是处理时延的一部分。处理时延也包括其他因素，比如检查比特级差错所需的时间，该差错出现在这些分组比特从上游节点向路由器传输的过程中。</p>
+<h2 id="6-2、排队时延"><a href="#6-2、排队时延" class="headerlink" title="6.2、排队时延"></a>6.2、排队时延</h2><p>在队列中，当分组在链路上等待传输时，它经受排队时延。一个特定分组的排队时延将取决于先期到达的、正在排队等待向链路传输的分组的数量。如果该队列是空的，并且当前没有其他分组在传输，则该分组的排队时延为0。另一方面，如果流量很大，并且许多其他分组也在等待传输，该排队时延将很大。</p>
+<h2 id="6-3、传输时延"><a href="#6-3、传输时延" class="headerlink" title="6.3、传输时延"></a>6.3、传输时延</h2><p>用L比特表示分组长度，R bps表示从路由器A到路由器B的链路传输速率，那么传输时延是L/R。这是将分组的所有比特推(传输)向链路所需要的时间。</p>
+<h2 id="6-4、传播时延"><a href="#6-4、传播时延" class="headerlink" title="6.4、传播时延"></a>6.4、传播时延</h2><p>一旦一个比特被推向链路，该比特需要向路由器B传播。从该链路的起点到路由器B传播所需要的时间是传播时延。该比特以该链路的传播速率传播。传播时延等于两台路由器之间的距离除以传播速率，即d/s，d是A到B之间的距离，s是传播速率。</p>
+<h2 id="6-5、排队时延与丢包"><a href="#6-5、排队时延与丢包" class="headerlink" title="6.5、排队时延与丢包"></a>6.5、排队时延与丢包</h2><p>令a表示分组到达队列的平均速率(a的单位是每秒分组，pkt/s)，R是传输速率，所有分组都是由L比特组成。则比特到达队列的平均速率是La bps。比率La/R被称为流量强度(traffic intensity)。如果La/R大于1，则比特到达队列的平均速率超过该队列的传输速率，这种情况下，队列的增加将趋于无界，排队时延将趋于无穷大。</p>
+<p>丢包：一条链路前的队列只有有限的容量，到达的分组发现一个满的队列时，由于没有地方存储这个分组，路由器将丢弃(drop)该分组，该分组将会丢失(lost)。</p>
+<h2 id="6-6、端到端时延"><a href="#6-6、端到端时延" class="headerlink" title="6.6、端到端时延"></a>6.6、端到端时延</h2><p>假定源主机和目的主机之间有N-1台路由器，并且该网络是无拥塞的(因此可忽略排队时延)，在每台路由器和源主机的处理时延是dproc，每台路由器和源主机的传输速率是R bps，每条链路的传播时延是dprop。节点时延累加起来得到端到端时延：de2e=N(dproc+dtrans+dprop)。其中dtrans=L/R，L是分组长度。</p>
+<h2 id="6-7、计算机网络中的吞吐量"><a href="#6-7、计算机网络中的吞吐量" class="headerlink" title="6.7、计算机网络中的吞吐量"></a>6.7、计算机网络中的吞吐量</h2><p>假设主机A通过网络向主机B发送一个大文件。任何瞬间的瞬间吞吐量(instantaneous throughput)是主机B接受到该文件的速率(以bps计)。若该文件由F比特组成，主机B接受到所有F比特用了T秒，则文件传送的平均吞吐量(average throughput)是F/T bps。</p>
+<h1 id="7、协议层次和它们的服务模型"><a href="#7、协议层次和它们的服务模型" class="headerlink" title="7、协议层次和它们的服务模型"></a>7、协议层次和它们的服务模型</h1><h2 id="7-1、分层的体系结构"><a href="#7-1、分层的体系结构" class="headerlink" title="7.1、分层的体系结构"></a>7.1、分层的体系结构</h2><p>一个协议层能够用软件、硬件或两者的结合来实现。HTTP和SMTP等应用层协议通常都是在端系统中用软件实现的，运输层协议也是如此。物理层和数据链路层负责处理跨特定链路的通信，它们通常在与给定链路相关的网络接口卡(例如以太网或者WiFi接口卡)中实现。网络层经常是硬件和软件的混合体。</p>
+<p>五层模型：应用层-&gt;运输层-&gt;网络层-&gt;链路层-&gt;物理层<br>七层模型：应用层-&gt;表示层-&gt;会话层-&gt;运输层-&gt;网络层-&gt;链路层-&gt;物理层</p>
+<p>各层的所有协议被称为协议栈(protocol stack)。因特网的协议栈由5个层次组成：物理层、链路层、网络层、运输层和应用层。</p>
+<p><strong>应用层：</strong>应用层是网络应用程序及其应用层协议存留的地方。应用层包括许多协议，例如HTTP、SMTP、FTP等等。应用层协议分布在多个端系统上，一个端系统中的应用程序使用协议与另一个端系统中的应用程序交换信息分组。这种位于应用层的信息分组称为报文(message)。</p>
+<p><strong>运输层：</strong>运输层提供了在应用程序端点之间传送应用层报文的服务。在因特网中，有两个运输层协议，即TCP和UDP，利用其中任何一个都能传输应用层报文。TCP向它的应用程序提供了面向连接的服务。这种服务包括了应用层报文向目的地的确保传递和流量控制(即发送方/接收方速率匹配)。TCP也将长报文划分为短报文，并提供拥塞控制机制，当网络拥塞时，源抑制其传输速率。UDP协议向它的应用程序提供无连接服务。这是一种不提供不必要服务的服务，不提供可靠性，没有流量控制，没有拥塞机制。传输层分组称为报文段(segment)。</p>
+<p><strong>网络层：</strong>网络层负责将称为数据报(datagram)的网络层分组从一台主机移动到另一台主机。源主机中的运输层协议向网络层递交运输层报文段和目的地址。网络层包括著名的IP协议，该协议定义了数据报中的各个字段以及端系统和路由器如何作用于这些字段。网络层还包括决定路由的选路协议，数据报根据该路由从源传输到目的地。</p>
+<p><strong>链路层：</strong>网络层通过一系列路由器在源和目的地之间发送分组。为了将分组从一个节点移动到路径上的下一个节点，网络层必须依靠链路层的服务。在每个节点，网络层将数据报下传给链路层，链路层沿着路径将数据报传递给下一个节点。数据报到达下一个节点后链路层将数据报上传给网络层。因为数据报从源到目的地传送通常需要经过几条链路，所以它可能被沿途不同链路上的不同链路层协议处理。例如，某个数据报可能被一条链路上的以太网和下一条链路上的PPP所处理，网络层将接受来自每个不同的链路层协议的不同服务。链路层的分组称为帧(frame)。</p>
+<p><strong>物理层：</strong>链路层的任务是讲整个帧从一个网络元素移动到邻近的网络元素，而物理层的任务是将该帧中的一个个比特从一个节点移动到下一个节点。该层的协议仍然是链路相关的，并且进一步与链路(例如，双绞铜线，光纤)的实际传输媒体有关。</p>
+<h2 id="7-2、报文、报文段、数据报、帧"><a href="#7-2、报文、报文段、数据报、帧" class="headerlink" title="7.2、报文、报文段、数据报、帧"></a>7.2、报文、报文段、数据报、帧</h2><p>数据从发送端系统的协议栈向下，上下中间的链路层交换机和路由器的协议栈，进而向上到达接收端系统的协议栈。在发送主机，应用层报文(application-layer message)被传送给运输层。在最简单的情况下，运输层收取报文并附加信息(即运输层首部信息)，该首部将被接收端的运输层使用。应用层报文和运输层首部共同构成了运输层报文段(transport-layer segment)。运输层报文段因此封装了应用层报文。附加的信息可能包括下列信息，如允许接收端运输层向上适当的应用程序交付报文的信息；差错检测比特信息。运输层向网络层传递该报文段，网络层增加了如源和目的端系统地址等网络层首部信息，形成了网络层数据报(network-layer datagram)。该数据报接下来被传递给链路层，链路层当然也增加它自己的链路层首部信息并创建了链路层帧(link-layer frame)。于是，每一层分组具有两种类型字段：首部字段和有效载荷字段(payload field)，有效载荷通常来自上一层的分组。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://hongchh.github.io/2016/09/11/计算机网络概述/" data-id="cj9vb96gh0012m0ti400bz0zx" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/09/11/socket通信基础知识点记录/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            socket通信基础知识点记录
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/08/26/JavaScript-事件流、事件处理程序及事件对象总结/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">JavaScript-事件流、事件处理程序及事件对象总结</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/30/Ajax文件上传/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-03-30-1.jpg)" alt="Ajax文件上传" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/30/Ajax文件上传/" class="title">Ajax文件上传</a></p>
+                            <p class="item-date"><time datetime="2017-03-30T14:11:23.000Z" itemprop="datePublished">2017-03-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 洪创煌</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

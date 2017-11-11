@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>socket通信基础知识点记录 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="计算机网络" />
+    
+    <meta name="description" content="网络通信是一种进程间通信(IPC, Inter-Process Communication)，要求位于不同网络节点不同进程的通信双方必须遵循统一的通信协议方可实现。基于套接字(Socket)通信是应用在不同节点上的进程间通信的典型办法。 1、基本原理1.1、 Socket API基本概念Socket API是TCP/IP网络的API，用于提供IPC通信。下面是socket API的概念模型。 So">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="socket通信基础知识点记录">
+<meta property="og:url" content="http://hongchh.github.io/2016/09/11/socket通信基础知识点记录/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="网络通信是一种进程间通信(IPC, Inter-Process Communication)，要求位于不同网络节点不同进程的通信双方必须遵循统一的通信协议方可实现。基于套接字(Socket)通信是应用在不同节点上的进程间通信的典型办法。 1、基本原理1.1、 Socket API基本概念Socket API是TCP/IP网络的API，用于提供IPC通信。下面是socket API的概念模型。 So">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hongchh.github.io/images/2016-09-11-1.jpg">
+<meta property="og:updated_time" content="2017-11-11T05:05:54.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="socket通信基础知识点记录">
+<meta name="twitter:description" content="网络通信是一种进程间通信(IPC, Inter-Process Communication)，要求位于不同网络节点不同进程的通信双方必须遵循统一的通信协议方可实现。基于套接字(Socket)通信是应用在不同节点上的进程间通信的典型办法。 1、基本原理1.1、 Socket API基本概念Socket API是TCP/IP网络的API，用于提供IPC通信。下面是socket API的概念模型。 So">
+<meta name="twitter:image" content="http://hongchh.github.io/images/2016-09-11-1.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">好好学习，天天向上！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-socket通信基础知识点记录" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        socket通信基础知识点记录
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/09/11/socket通信基础知识点记录/" class="article-date">
+            <time datetime="2016-09-11T07:34:52.000Z" itemprop="datePublished">2016-09-11</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/计算机网络/">计算机网络</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>网络通信是一种进程间通信(IPC, Inter-Process Communication)，要求位于不同网络节点不同进程的通信双方必须遵循统一的通信协议方可实现。基于套接字(Socket)通信是应用在不同节点上的进程间通信的典型办法。</p>
+<h1 id="1、基本原理"><a href="#1、基本原理" class="headerlink" title="1、基本原理"></a>1、基本原理</h1><h2 id="1-1、-Socket-API基本概念"><a href="#1-1、-Socket-API基本概念" class="headerlink" title="1.1、 Socket API基本概念"></a>1.1、 Socket API基本概念</h2><p>Socket API是TCP/IP网络的API，用于提供IPC通信。下面是socket API的概念模型。<br><img src="/images/2016-09-11-1.jpg" alt="socket"></p>
+<p>Socket是物理网络地址和逻辑端口号的一个集合，通过这个集合可以向另外一个位置的与它具有相同定义的Socket进行数据传输。由于Socket是由机器地址和端口号来识别，那么在一个特定的计算机网络上，每一个socket都是由此方式被唯一标识的，这也使得应用程序可以被唯一定位。socket类型有两种：一个是流式socket，提供进程之间的逻辑链接，并且支持可靠的数据交换；另一个则是数据包socket，无连接且不可靠。</p>
+<h2 id="1-2、-JAVA对网络通信的支持"><a href="#1-2、-JAVA对网络通信的支持" class="headerlink" title="1.2、 JAVA对网络通信的支持"></a>1.2、 JAVA对网络通信的支持</h2><p>JDK提供的预定义类库支持Java程序直接发送与接收TCP数据段或UDP数据报，并帮助程序员以更直接的方式处理建立在TCP之上的应用层协议HTTP、FTP等。JDK预定义的类均放在程序包java.net中，使用其中哪些类取决于所需要处理的通信协议。例如，基于TCP的应用程序可使用Socket，ServerSocket等类；基于HTTP和FTP等协议直接访问URL资源的应用程序可使用URL、URLConnection等类。</p>
+<h2 id="1-3、TCP、UDP与端口"><a href="#1-3、TCP、UDP与端口" class="headerlink" title="1.3、TCP、UDP与端口"></a>1.3、TCP、UDP与端口</h2><p>传输控制协议(TCP, Transfer Control Protocol)是一种面向连接的传输层协议，可为两台主机上的应用程序提供可靠的数据流连接。所谓”面向连接”意味着两个使用TCP通信的应用程序在交换数据之前必须先建立一个TCP连接，带通信结束后须关闭该连接。这一过程与电话通信类似。TCP执行的任务包括把应用层传来的数据分解为合适的数据段交给网络层，确认接收到的数据分组，设置发送最后确认分组的超时时间等，为应用层屏蔽了实现端到端可靠通信的细节。TCP可保证数据从连接的一端送到另一端时仍能保持原来发送时的次序，否则将出现一个传输错误。TCP为需要可靠通信的应用程序提供了一种点对点信道，在因特网上常见的FTP、SMTP等协议都是建立在TCP的基础上。</p>
+<p>用户数据报协议(UDP, User Datagram Protocol)不是基于连接的，而是为应用层提供一种非常简单、高效的传输服务。UDP从一个应用程序向另一个应用程序发送独立的数据报，但并不保证这些数据报一定能到达另一方，并且这些数据报的传输次序无保障，后发送的数据报可能先到达目的地。使用UDP协议时，任何必需的可靠性都须由应用层自己提供。UDP适用于对通信可靠性要求低且对通信性能要求高的应用，如DNS、RIP等协议都建立在UDP的基础上。</p>
+<p>由于现代计算机大多运行多任务操作系统，故一台主机上可能同时运行多个应用程序进程，并且一个进程还可能使用多个不同的连接，因而仅用主机名或IP地址无法唯一标识数据包的源或目标。端口为标识参与通信的主机、进程与连接提供了一种统一的、唯一的方法。</p>
+<h1 id="2、数据报socket"><a href="#2、数据报socket" class="headerlink" title="2、数据报socket"></a>2、数据报socket</h1><h2 id="2-1-面向无连接数据包UDP"><a href="#2-1-面向无连接数据包UDP" class="headerlink" title="2.1 面向无连接数据包UDP"></a>2.1 面向无连接数据包UDP</h2><p>UDP协议使用数据报式套接字，在数据传输之前不需要先建立连接，UDP没有组装和重传请求的功能，并不保证接收方能够接收到该数据包，也不保证接收方所接收到的数据和发送方所发送的数据在内容和顺序上是完全一致的。其主要工作是将应用程序传输过来的数据分块交给网络层，确认接收到分组信息。<br><img src="/images/2016-09-11-2.jpg" alt="UDP-1"></p>
+<h2 id="2-2-面向连接数据包UDP"><a href="#2-2-面向连接数据包UDP" class="headerlink" title="2.2 面向连接数据包UDP"></a>2.2 面向连接数据包UDP</h2><p>一般来说，很少用数据报socket实现面向连接通信，因为此API提供的连接非常简单，通常难以满足应用需求。<br><img src="/images/2016-09-11-3.jpg" alt="UDP-2"></p>
+<h1 id="3、流式socket"><a href="#3、流式socket" class="headerlink" title="3、流式socket"></a>3、流式socket</h1><h2 id="3-1-基本编程原理"><a href="#3-1-基本编程原理" class="headerlink" title="3.1 基本编程原理"></a>3.1 基本编程原理</h2><p>流式socket所完成的通信是一种基于连接的通信，即在通信开始之前先由通信双方确认身份并建立一条专用的虚拟连接通道，然后它们通过这条通道传送数据信息进行通信，当通信结束时再将原先所建立的连接拆除。在这个过程中，Server端首先在某个端口提供一个监听Client请求的监听服务，并处于监听状态，当Client端向该Server的这个端口提出服务请求时，Server端课Client端就建立了一个连接和一条传输数据的通道，通信结束时该通道被拆除。<br><img src="/images/2016-09-11-4.jpg" alt="flow"></p>
+<h2 id="3-2-单线程服务程序与客户程序"><a href="#3-2-单线程服务程序与客户程序" class="headerlink" title="3.2 单线程服务程序与客户程序"></a>3.2 单线程服务程序与客户程序</h2><p>使用基于TCP协议的双向通信时，网络中的两个应用程序之间必须首先建立一个连接，这一连接的两个端点分别被称为socket。由于socket被绑定到某一固定的端口号，故TCP可将数据传输给正确的应用程序。从应用变成的角度看，应用程序可将一个输入流或一个输出流绑定到某一socket，读写这些输入/输出流即可实现基于TCP的通信。</p>
+<p>使用网络通信的应用程序普遍采用客户机/服务器计算模型(C/S架构)，其中客户程序作为通信的发起者，向服务器提出信息或服务请求；服务程序则负责提供这种信息或服务，服务程序经常在一个无限循环中等待客户程序的请求并执行相应的服务。</p>
+<p>在Java程序中使用socket通信可支持在一台主机上运行的单个服务程序为多个不同的客户程序提供服务。其通信模式如下，服务程序将选定一个固定的端口号对外发布服务，客户程序则必须先按约定的主机与端口号向服务程序发送一个要求建立连接的请求(这些请求称为连接请求)，申请建立一个到服务程序的连接。服务程序在收到某一客户程序的连接请求后，并不是利用对外发布的那个端口号建立与该客户程序的连接，而是另外分配一个新的端口号建立与客户程序之间的连接，原端口号仍用于监听其他客户程序的连接请求，不会因为该端口长期处理客户程序请求而导致其他客户程序阻塞。<br><img src="/images/2016-09-11-5.jpg" alt="flow-2"></p>
+<h2 id="3-3-多线程服务程序"><a href="#3-3-多线程服务程序" class="headerlink" title="3.3 多线程服务程序"></a>3.3 多线程服务程序</h2><p>单线程的服务端在同一时刻只能处理一个客户连接，一旦服务程序的accept()被调用，服务程序主线程将持续执行客户程序发来的服务请求，再无其他线程监听服务程序对外发布的端口，导致后续的客户连接请求失败。一种简单的改进途径是当服务程序处理完一个客户连接后再次循环执行accept()。这种改进虽然可以使服务程序在处理完一个客户程序的所有服务请求后，还可继续建立与下一客户程序的连接并处理请求。但在一个客户程序提交的服务请求需占用服务程序较长时间的情况下，其他客户程序的连接请求将进入队列等待，甚至可能因队列溢出而丢失。</p>
+<p>另外一种改进途径是使用多线程编程方式，让服务程序的主线程执行监听客户程序连接请求的任务，而处理客户程序服务请求的任务则交由另一个新建的线程负责。</p>
+<h1 id="4、应用层协议开发"><a href="#4、应用层协议开发" class="headerlink" title="4、应用层协议开发"></a>4、应用层协议开发</h1><h2 id="4-1-应用层协议理解"><a href="#4-1-应用层协议理解" class="headerlink" title="4.1 应用层协议理解"></a>4.1 应用层协议理解</h2><p>一般来说，网络协议有三个要素，分别是：语法、语义与规则(时序)。语义规定了通信双方彼此之间准备”讲什么”，即确定协议元素的类型；语法规定通信双发彼此之间”如何讲”，即确定协议元素的格式；变换规则用以规定通信双方彼此之间的”应答关系”，即确定通信过程中的状态变化，通常可用状态变化图来描述。针对应用层协议，此三要素的含义是：语法是消息的语法和描写，语义是指消息的解释或含义，规则是进程间通信的顺序。</p>
+<h2 id="4-2-FTP协议开发"><a href="#4-2-FTP协议开发" class="headerlink" title="4.2 FTP协议开发"></a>4.2 FTP协议开发</h2><p>文件传输协议FTP(File Transfer Protocol)是一个用于在两台装有不同操作系统的计算机之间传输计算机文件的软件标准，工作于应用层。FTP服务一般运行在20和21两个端口。端口20用于在客户端和服务器之间传输数据流，而端口21用于传输控制流。当数据通过数据流传输时，控制流处于空闲状态。<br><img src="/images/2016-09-11-6.jpg" alt="FTP"></p>
+<p>FTP协议有两种工作方式：PORT方式和PASV方式，即主动模式和被动模式。主动模式要求客户端和服务器同时打开并且监听一个端口以建立连接，主动模式的连接过程是：客户端向服务器的FTP端口(默认是21)发送连接请求，服务器接受连接，建立一条命令链路。当需要传送数据时，服务器从20端口向客户端的空闲端口发送连接请求，建立一条数据链路来传送数据。</p>
+<p>在主动模式下，客户端可以由于安装了防火墙会产生一些问题，所以创立了被动模式。被动模式只要求服务器端产生一个监听相应端口的过程，这样就可以绕过客户端安装了防火墙的问题。被动模式的连接过程是：客户端向服务器的FTP端口发送请求，服务器接受连接，建立一条命令链路。当需要传送数据时，客户端向服务器空闲端口发送连接请求，建立一条数据链路来传送数据。</p>
+<h2 id="4-3-HTTP协议开发"><a href="#4-3-HTTP协议开发" class="headerlink" title="4.3 HTTP协议开发"></a>4.3 HTTP协议开发</h2><p>超文本传输协议HTTP采用典型的”请求-答复”通信模型：客户程序建立与服务器程序的连接后，向服务程序发送一个服务请求；服务程序根据请求获取相应的文档作为答复送回客户程序，最后关闭连接。<br><img src="/images/2016-09-11-7.jpg" alt="HTTP"></p>
+<p>由于在客户程序和服务程序的整个会话过程中可能需要建立多个连接(例如，为获取两个不同URL指定的资源而分别建立两个TCP连接)，而不是持久地使用同一TCP连接，故HTTP是一种无状态协议。在HTTP协议的实现中可通过减少TCP连接的建立与次数以提高通信效率，HTTP/1.1的持久连接机制甚至还保证了客户程序与服务程序之间同一类型元素持久地使用同一连接，但HTTP仍不能被视为一种可保持会话状态的协议。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://hongchh.github.io/2016/09/11/socket通信基础知识点记录/" data-id="cj9vb96gf000zm0tiffzshov8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/09/19/稳定匹配问题与GS算法-单身狗脱单秘籍/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            稳定匹配问题与GS算法-单身狗脱单秘籍
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/09/11/计算机网络概述/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">计算机网络概述</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/06/09/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/05/24/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/30/Ajax文件上传/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-03-30-1.jpg)" alt="Ajax文件上传" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/30/Ajax文件上传/" class="title">Ajax文件上传</a></p>
+                            <p class="item-date"><time datetime="2017-03-30T14:11:23.000Z" itemprop="datePublished">2017-03-30</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2017 洪创煌</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
