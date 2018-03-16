@@ -9,19 +9,19 @@
     
         <meta name="keywords" content="JavaScript" />
     
-    <meta name="description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 文件上传HTML结构如下，一个file input和一个button。当点击“上传”按钮的时候，将file input选">
+    <meta name="description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 本文所用的代码示例可以从github仓库 file-upload-demo 中找到。 文件上传HTML结构如下，一个fi">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ajax文件上传">
 <meta property="og:url" content="http://hongchh.github.io/2017/03/30/Ajax文件上传/index.html">
 <meta property="og:site_name" content="洪创煌的博客">
-<meta property="og:description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 文件上传HTML结构如下，一个file input和一个button。当点击“上传”按钮的时候，将file input选">
+<meta property="og:description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 本文所用的代码示例可以从github仓库 file-upload-demo 中找到。 文件上传HTML结构如下，一个fi">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://hongchh.github.io/images/2017-03-30-1.jpg">
-<meta property="og:updated_time" content="2017-11-11T10:56:49.317Z">
+<meta property="og:updated_time" content="2018-03-16T09:23:46.603Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ajax文件上传">
-<meta name="twitter:description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 文件上传HTML结构如下，一个file input和一个button。当点击“上传”按钮的时候，将file input选">
+<meta name="twitter:description" content="为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。 本文所用的代码示例可以从github仓库 file-upload-demo 中找到。 文件上传HTML结构如下，一个fi">
 <meta name="twitter:image" content="http://hongchh.github.io/images/2017-03-30-1.jpg">
     
 
@@ -172,6 +172,7 @@
         
         <div class="article-entry" itemprop="articleBody">
             <p>为了避免在实现简单的异步文件上传功能时候引入一个第三方库文件的尴尬情形（库文件可能造成多余的开销，拉低应用加载速度，尤其是在引入库文件之后仅使用其中一两个功能的情况下，性价比极低），最近了解了一下文件异步上传的实现原理，顺带看了看进度条、图片预览等功能的实现，做一点简单的整理。</p>
+<p>本文所用的代码示例可以从github仓库 <a href="https://github.com/hongchh/file-upload-demo" target="_blank" rel="external">file-upload-demo</a> 中找到。</p>
 <h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p>HTML结构如下，一个<code>file input</code>和一个<code>button</code>。当点击“上传”按钮的时候，将<code>file input</code>选中的文件上传到服务器。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"upload"</span>&gt;</span>上传<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>以下是“上传”按钮的点击事件处理器，点击按钮之后通过一个<code>XMLHttpRequest</code>对象来实现发送异步请求。上传的内容为文件，因此还需要用到<code>FormData</code>对象，<code>FormData</code>可以js里面创建表单对象，将<code>file input</code>的文件<code>append</code>到<code>FormData</code>对象中，最后调用XHR对象的<code>send()</code>方法将表单数据发送出去即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file = <span class="built_in">document</span>.querySelector(<span class="string">'#file'</span>);</span><br><span class="line"><span class="keyword">var</span> upload = <span class="built_in">document</span>.querySelector(<span class="string">'#upload'</span>);</span><br><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 点击上传</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  formData.append(<span class="string">'test-upload'</span>, file.files[<span class="number">0</span>]);</span><br><span class="line">  xhr.onload = uploadSuccess;</span><br><span class="line">  xhr.open(<span class="string">'post'</span>, <span class="string">'/upload'</span>, <span class="literal">true</span>);</span><br><span class="line">  xhr.send(formData);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 成功上传</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadSuccess</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(xhr.responseText);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="上传进度"><a href="#上传进度" class="headerlink" title="上传进度"></a>上传进度</h1><p>在进行文件上传的时候，xhr对象会有一个<code>upload</code>属性，会提供一个<code>progress</code>事件，在相应的事件处理器里面通过事件对象可以知道当前的上传进度，利用这个特点可以很方便地实现进度条或者进度提示。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">id</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"upload"</span>&gt;</span>上传<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"progress"</span>&gt;</span>0%<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -479,7 +480,7 @@
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2017 洪创煌</p>
+                <p>&copy; 2018 洪创煌</p>
                 <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
             </div>
         </div>
