@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>【动态规划】带权值区间调度问题 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="数据结构与算法" />
+    
+    <meta name="description" content="一、问题定义存在单一资源R，有n个需求{1, 2, ..., n}，每个需求指定一个开始时间bi与一个结束时间ei，在时间区间[bi, ei]内该需求想要占用资源R，资源R一旦被占用则无法被其他需求利用。每个需求i带有一个权值vi，代表该需求被满足之后能够带来的价值或者贡献。如果两个需求的时间区间不重叠，那么它们是相容的。带权值的区间调度问题即，对上面所描述的情境，求出一组相容子集S使得S中的区间">
+<meta name="keywords" content="数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【动态规划】带权值区间调度问题">
+<meta property="og:url" content="https://hongchh.github.io/2016/【动态规划】带权值区间调度问题/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="一、问题定义存在单一资源R，有n个需求{1, 2, ..., n}，每个需求指定一个开始时间bi与一个结束时间ei，在时间区间[bi, ei]内该需求想要占用资源R，资源R一旦被占用则无法被其他需求利用。每个需求i带有一个权值vi，代表该需求被满足之后能够带来的价值或者贡献。如果两个需求的时间区间不重叠，那么它们是相容的。带权值的区间调度问题即，对上面所描述的情境，求出一组相容子集S使得S中的区间">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://hongchh.github.io/images/2016-10-24-1.jpg">
+<meta property="og:updated_time" content="2017-11-11T05:35:26.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【动态规划】带权值区间调度问题">
+<meta name="twitter:description" content="一、问题定义存在单一资源R，有n个需求{1, 2, ..., n}，每个需求指定一个开始时间bi与一个结束时间ei，在时间区间[bi, ei]内该需求想要占用资源R，资源R一旦被占用则无法被其他需求利用。每个需求i带有一个权值vi，代表该需求被满足之后能够带来的价值或者贡献。如果两个需求的时间区间不重叠，那么它们是相容的。带权值的区间调度问题即，对上面所描述的情境，求出一组相容子集S使得S中的区间">
+<meta name="twitter:image" content="https://hongchh.github.io/images/2016-10-24-1.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">生命是一场练习！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-【动态规划】带权值区间调度问题" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        【动态规划】带权值区间调度问题
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/【动态规划】带权值区间调度问题/" class="article-date">
+            <time datetime="2016-10-24T11:21:13.000Z" itemprop="datePublished">2016-10-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/数据结构与算法/">数据结构与算法</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="一、问题定义"><a href="#一、问题定义" class="headerlink" title="一、问题定义"></a>一、问题定义</h1><p>存在单一资源<code>R</code>，有<code>n</code>个需求<code>{1, 2, ..., n}</code>，每个需求指定一个开始时间<code>bi</code>与一个结束时间<code>ei</code>，在时间区间<code>[bi, ei]</code>内该需求想要占用资源<code>R</code>，资源<code>R</code>一旦被占用则无法被其他需求利用。每个需求<code>i</code>带有一个权值<code>vi</code>，代表该需求被满足之后能够带来的价值或者贡献。如果两个需求的时间区间不重叠，那么它们是相容的。带权值的区间调度问题即，对上面所描述的情境，求出一组相容子集<code>S</code>使得<code>S</code>中的区间权值之和最大。</p>
+<p>举个简单例子，某一款网络游戏近期举办了不少活动，玩家只要参加活动可以获得相应的奖励。每个活动都有对应的活动时间以及活动奖励，玩家在一个时间段之内只能参加一个活动，并且必须完整地参加一个活动才能获取奖励(即从活动开始到活动结束之间不能中断去参加其他活动)。假设现在有<code>n</code>个活动，部分活动的时间区间有重叠。某位精通算法的玩家希望通过计算确定合理的活动安排，使得自己获取的奖励最大化。</p>
+<h1 id="二、解决思路"><a href="#二、解决思路" class="headerlink" title="二、解决思路"></a>二、解决思路</h1><p>继续以上面的游戏活动为背景。假设将活动按照它们的结束时间<code>ei</code>从早到晚进行排序。<code>e1 &lt;= e2 &lt;= ... &lt;= en</code>。排序之后我们会得到如下所示的活动顺序图。</p>
+<p><img src="/images/2016-10-24-1.jpg" alt="活动顺序图"></p>
+<p>上图中的标记表示活动名称(活动1、活动2、…)，<code>vi</code>表示参加活动<code>i</code>能够收获的奖励，<code>vi</code>的值越大表示奖励越多。下面定义图中展示的<code>p(j)</code>。对于某个活动j，<code>p(j)</code>表示排在活动<code>j</code>之前的所有活动里面离<code>j</code>最近并且相容的活动，如果没有相容的活动，则<code>p(j) = 0</code>。例如<code>p(3)</code>，从图中可以看到，活动3前面只有活动2和活动1，而活动2跟活动3有区间重叠，不相容，只有活动1相容，因此<code>p(3) = 1</code>，代表活动3前面的所有活动中离它最近并且相容的活动是活动1。</p>
+<p>我们要解决的问题是选择一组最优活动组合使得所有活动奖励之和最大。这里再定义一个概念，<code>OPT(n)</code>，表示从<code>n</code>个活动<code>{1, 2, ..., n}</code>中能够获取到的最大奖励。假设我们已经从<code>{1, 2, ..., n-1}</code>中选取出一组最优活动组合，使得最大活动奖励为<code>OPT(n-1)</code>。现在要来考虑是否要参加活动<code>n</code>，这个时候有两种选择策略：</p>
+<ul>
+<li>第一，参加活动<code>n</code>。要参加活动<code>n</code>的话必须去掉<code>{1, 2, ..., n-1}</code>中所有跟<code>n</code>冲突的活动。也就是说，我们只能从活动<code>{1, 2, ..., p(n)}</code>中选取要参加的活动组合，而活动<code>{p(n)+1, p(n)+2, ..., n-1}</code>则全部不能选择，因为它们都跟活动<code>n</code>冲突了（回顾前面<code>p(j)</code>的定义）。那么这个时候选择参加活动<code>n</code>之后，我们会得到新的活动组合，这个组合的奖励之和会变成<code>OPT(p(n)) + vn</code>，即从活动<code>{1, 2, ..., p(n)}</code>中能够获取的最大奖励再加上活动<code>n</code>的奖励。</li>
+<li>第二，放弃活动<code>n</code>，这种情况下计算活动奖励就很简单了，选择参加的活动组合没有发生变化，故奖励仍是从<code>{1, 2, ..., n-1}</code>中能够获取的最大奖励<code>OPT(n-1)</code>。</li>
+</ul>
+<p>我们的目的是求取一个最优的活动组合使得奖励最大化，因此，只需要考虑上面两种选择哪一种的奖励更多即可，奖励越多的选择越优秀。如果<code>OPT(p(n)) + vn</code>的值更大，选择参加活动<code>n</code>，放弃跟<code>n</code>冲突的其他活动。如果<code>OPT(n-1)</code>更大，那么放弃活动<code>n</code>，继续保留原来选定的活动组合。于是我们很容易可以得到下面的递推公式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPT(j) = max(OPT(p(j)) + vj, OPT(j-1))</span><br></pre></td></tr></table></figure></p>
+<p>得到上面的公式之后，我们可以发现，求解一个问题<code>OPT(j)</code>，可以通过求解它的子问题<code>OPT(j-1)</code>来实现，于是我们做到了把求解一个问题变成求解它的子问题。于是我们可以得到下面这个递归算法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OPT(j):</span><br><span class="line">    If j == 0 then</span><br><span class="line">        return 0</span><br><span class="line">    Else</span><br><span class="line">        return max(OPT(p(j)) + vj, OPT(j-1))</span><br><span class="line">    Endif</span><br></pre></td></tr></table></figure></p>
+<h1 id="三、优化改进"><a href="#三、优化改进" class="headerlink" title="三、优化改进"></a>三、优化改进</h1><p>上面的递归算法是尾递归，可以使用迭代对其进行优化。使用一个数组(动态规划的专业名词叫做备忘录)来记录求解过的值，避免重复求解。改进之后可以得到下面这个迭代算法，时间复杂度为<code>O(n)</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">OPT[n] = &#123;0&#125;</span><br><span class="line">For j = 1 to n:</span><br><span class="line">    OPT[j] = max(OPT(p(j)) + vj, OPT(j-1))</span><br><span class="line">Endfor</span><br></pre></td></tr></table></figure></p>
+<p>该算法已经可以帮助我们找到最大奖励了。但仅知道一个最大奖励并没有太大意义，我们更需要知道通过参加哪些活动来取得最大奖励。因此，我们在计算最大活动奖励的过程中，还需要记录一下选取了哪些活动。</p>
+<p>我们定义一个记录数组<code>S</code>，继续回到我们前面讨论过的选择活动<code>n</code>的时候面临的两种选择。如果采取第一选择，即参加活动<code>n</code>，我们便记录<code>S[n][0] = true</code>，<code>S[n][1] = p(n)</code>，代表我们在考虑活动<code>n</code>的时候选择了参加活动<code>n</code>，搭配上前面<code>{1, 2, ..., p(n)}</code>中的最优组合。如果采取第二选择，即放弃活动<code>n</code>，那么我们记录<code>S[n][0] = false</code>，<code>S[n][1] = n-1</code>，代表我们放弃活动<code>n</code>，此时活动的选择情况还是与之前考虑活动<code>n-1</code>时候的情况一致。于是我们可以得到如下算法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">OPT[n] = &#123;0&#125;</span><br><span class="line">初始化 S[n][2]</span><br><span class="line">For j = 1 to n:</span><br><span class="line">    If OPT(p(j)) + vj &gt;= OPT(j-1) then</span><br><span class="line">        OPT[j] = OPT(p(j)) + vj</span><br><span class="line">        S[j][0] = true</span><br><span class="line">        S[j][1] = p[j]</span><br><span class="line">    Else</span><br><span class="line">        OPT(j) = OPT(j-1)</span><br><span class="line">        S[j][0] = false</span><br><span class="line">        S[j][1] = n-1</span><br><span class="line">    Endif</span><br><span class="line">Endfor</span><br></pre></td></tr></table></figure></p>
+<p>通过上面算法便可以得到想要的活动组合的记录表了。然后反向搜索一下记录表便可得到最优的活动组合。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">j = n</span><br><span class="line">while j != 0:</span><br><span class="line">    If S[j][0] then</span><br><span class="line">        print j</span><br><span class="line">    Endif</span><br><span class="line">    j = S[j][1]</span><br><span class="line">Endwhile</span><br></pre></td></tr></table></figure></p>
+<h1 id="四、代码示例"><a href="#四、代码示例" class="headerlink" title="四、代码示例"></a>四、代码示例</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX_REQ_NUM = <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Request</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> beginTime;</span><br><span class="line">  <span class="keyword">int</span> endTime;</span><br><span class="line">  <span class="keyword">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> Request&amp; r1, <span class="keyword">const</span> Request&amp; r2) &#123;</span><br><span class="line">  <span class="keyword">return</span> r1.endTime &lt; r2.endTime;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DP</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setRequestNum</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; requestNum)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;requestNum = requestNum;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= requestNum; ++i) &#123;</span><br><span class="line">      <span class="built_in">cin</span> &gt;&gt; reqs[i].beginTime &gt;&gt; reqs[i].endTime &gt;&gt; reqs[i].value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 预备，根据结束时间对所有请求排序，初始化数组p</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    sort(reqs + <span class="number">1</span>, reqs + requestNum + <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">memset</span>(p, <span class="number">0</span>, <span class="keyword">sizeof</span>(p));</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= requestNum; ++i) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = i<span class="number">-1</span>; j &gt; <span class="number">0</span>; --j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (reqs[j].endTime &lt;= reqs[i].beginTime) &#123;</span><br><span class="line">          p[i] = j;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(record, <span class="number">0</span>, <span class="keyword">sizeof</span>(record));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 动态规划算法</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    optimal[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= requestNum; ++i) &#123;</span><br><span class="line">      <span class="keyword">if</span> (optimal[p[i]] + reqs[i].value &gt;= optimal[i<span class="number">-1</span>]) &#123;</span><br><span class="line">        optimal[i] = optimal[p[i]] + reqs[i].value;</span><br><span class="line">        record[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        record[i][<span class="number">1</span>] = p[i];</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        optimal[i] = optimal[i<span class="number">-1</span>];</span><br><span class="line">        record[i][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        record[i][<span class="number">1</span>] = i<span class="number">-1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 输出结果</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"[MAX VALUE]: "</span> &lt;&lt; optimal[requestNum]</span><br><span class="line">         &lt;&lt; <span class="string">"\n[Activities]:\n"</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = requestNum; i &gt; <span class="number">0</span>; i = record[i][<span class="number">1</span>]) &#123;</span><br><span class="line">      <span class="keyword">if</span> (record[i][<span class="number">0</span>] == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"activity-"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  Request reqs[MAX_REQ_NUM + <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">int</span> requestNum;</span><br><span class="line">  <span class="keyword">int</span> p[MAX_REQ_NUM + <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">int</span> optimal[MAX_REQ_NUM + <span class="number">1</span>];</span><br><span class="line">  <span class="keyword">int</span> record[MAX_REQ_NUM + <span class="number">1</span>][<span class="number">2</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> requestNum;</span><br><span class="line">  DP dp;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; requestNum;</span><br><span class="line">  dp.setRequestNum(requestNum);</span><br><span class="line">  dp.init();</span><br><span class="line">  dp.prepare();</span><br><span class="line">  dp.solve();</span><br><span class="line">  dp.output();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输入格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">活动总数</span><br><span class="line">活动1的开始时间、结束时间、贡献价值</span><br><span class="line">活动2的开始时间、结束时间、贡献价值</span><br><span class="line">...</span><br><span class="line">活动n的开始时间、结束时间、贡献价值</span><br></pre></td></tr></table></figure></p>
+<p>输入输出示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">6</span><br><span class="line">0 4 2</span><br><span class="line">1 6 4</span><br><span class="line">5 7 4</span><br><span class="line">2 9 7</span><br><span class="line">8 10 2</span><br><span class="line">8 11 1</span><br><span class="line">[MAX VALUE]: 8</span><br><span class="line">[Activities]:</span><br><span class="line">activity-5</span><br><span class="line">activity-3</span><br><span class="line">activity-1</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hongchh.github.io/2016/【动态规划】带权值区间调度问题/" data-id="cjfusq18w001afktix89w5co4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/Construct-a-VPN-by-making-use-of-OpenVPN/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Construct-a-VPN-by-making-use-of-OpenVPN
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/计算机网络应用层协议分析总结/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">计算机网络应用层协议分析总结</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/试玩NodeJS多进程/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2018-04-11/master-worker.png)" alt="试玩NodeJS多进程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/试玩NodeJS多进程/" class="title">试玩NodeJS多进程</a></p>
+                            <p class="item-date"><time datetime="2018-04-11T07:47:22.000Z" itemprop="datePublished">2018-04-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 洪创煌(hongchh_sysu@qq.com)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

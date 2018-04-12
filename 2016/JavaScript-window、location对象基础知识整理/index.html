@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JavaScript-window、location对象基础知识整理 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="JavaScript" />
+    
+    <meta name="description" content="一、window对象window是BOM的核心对象，表示浏览器的一个实例。在浏览器中，window对象有双重角色，它是通过JS访问浏览器窗口的一个接口，也是Global对象。任何在全局作用域中声明的变量和函数都会变成window对象的属性和方法。 虽然全局变量也是window对象的属性，但是与直接在window上定义的属性也是有点不同。全局变量不能通过delete操作符删除，而直接在window上">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript-window、location对象基础知识整理">
+<meta property="og:url" content="https://hongchh.github.io/2016/JavaScript-window、location对象基础知识整理/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="一、window对象window是BOM的核心对象，表示浏览器的一个实例。在浏览器中，window对象有双重角色，它是通过JS访问浏览器窗口的一个接口，也是Global对象。任何在全局作用域中声明的变量和函数都会变成window对象的属性和方法。 虽然全局变量也是window对象的属性，但是与直接在window上定义的属性也是有点不同。全局变量不能通过delete操作符删除，而直接在window上">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-10T12:54:01.321Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript-window、location对象基础知识整理">
+<meta name="twitter:description" content="一、window对象window是BOM的核心对象，表示浏览器的一个实例。在浏览器中，window对象有双重角色，它是通过JS访问浏览器窗口的一个接口，也是Global对象。任何在全局作用域中声明的变量和函数都会变成window对象的属性和方法。 虽然全局变量也是window对象的属性，但是与直接在window上定义的属性也是有点不同。全局变量不能通过delete操作符删除，而直接在window上">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">生命是一场练习！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-JavaScript-window、location对象基础知识整理" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        JavaScript-window、location对象基础知识整理
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2016/JavaScript-window、location对象基础知识整理/" class="article-date">
+            <time datetime="2016-08-18T02:43:00.000Z" itemprop="datePublished">2016-08-18</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="一、window对象"><a href="#一、window对象" class="headerlink" title="一、window对象"></a>一、window对象</h1><p><code>window</code>是<code>BOM</code>的核心对象，表示浏览器的一个实例。在浏览器中，<code>window</code>对象有双重角色，它是通过JS访问浏览器窗口的一个接口，也是<code>Global</code>对象。任何在全局作用域中声明的变量和函数都会变成<code>window</code>对象的属性和方法。</p>
+<p>虽然全局变量也是<code>window</code>对象的属性，但是与直接在<code>window</code>上定义的属性也是有点不同。全局变量不能通过<code>delete</code>操作符删除，而直接在<code>window</code>上定义的属性则可以。另外，直接访问未声明的变量会抛出错误，而通过<code>window</code>对象访问则不会，只是返回<code>undefined</code>。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p1 = <span class="string">'p1'</span>;</span><br><span class="line"><span class="built_in">window</span>.p2 = <span class="string">'p2'</span>;</span><br><span class="line"><span class="keyword">delete</span> <span class="built_in">window</span>.p1; <span class="comment">// 无法删除</span></span><br><span class="line"><span class="keyword">delete</span> <span class="built_in">window</span>.p2;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.p1); <span class="comment">// 输出'p1'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.p2); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.p3); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(p3); <span class="comment">// 出错</span></span><br></pre></td></tr></table></figure></p>
+<p>如果页面中包含框架(<code>frame</code>)，则每个框架都有自己的<code>window</code>对象，并且保存在<code>frames</code>集合中，可以通过数值索引或者框架名称来访问相应的<code>window</code>对象。举个例子，对于下面代码，可以使用<code>window.frames[0]</code>或者<code>window.frames[&quot;top&quot;]</code>来访问名字为”top”的框架。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Frames<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"160, *"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"top-frame.html"</span> <span class="attr">name</span>=<span class="string">"top"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">frameset</span> <span class="attr">cols</span>=<span class="string">"50%, 50%"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"left-frame.html"</span> <span class="attr">name</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">frame</span> <span class="attr">src</span>=<span class="string">"right-frame.html"</span> <span class="attr">name</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">frame</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>通过<code>window</code>对象的属性可以获取和调节窗口位置。使用下面代码可以跨浏览器获取窗口左边和上边的位置。使用<code>moveTo</code>和<code>moveBy</code>方法可以移动窗口调节位置，<code>moveTo</code>接受的参数是新位置的坐标，<code>moveBy</code>接受的参数是水平和垂直方向上的偏移量。(移动窗口的方法在某些浏览器中可能被禁用；这两个方法不适用于框架)<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> leftPos = (<span class="keyword">typeof</span> <span class="built_in">window</span>.screenLeft == <span class="string">"number"</span>) ? <span class="built_in">window</span>.screenLeft : <span class="built_in">window</span>.screenX;</span><br><span class="line"><span class="keyword">var</span> topPos = (<span class="keyword">typeof</span> <span class="built_in">window</span>.screenTop == <span class="string">"number"</span>) ? <span class="built_in">window</span>.screenTop : <span class="built_in">window</span>.screenY;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.moveTo(<span class="number">0</span>, <span class="number">0</span>); <span class="comment">// 移动到屏幕左上角</span></span><br><span class="line"><span class="built_in">window</span>.moveBy(<span class="number">0</span>, <span class="number">100</span>); <span class="comment">// 向下移动100像素</span></span><br></pre></td></tr></table></figure></p>
+<p>通过<code>window</code>对象的属性可以获取和调节窗口大小。使用<code>resizeTo</code>和<code>resizeBy</code>方法可以调节窗口大小，<code>resizeTo</code>接受的参数是窗口的新宽度和高度，<code>resizeBy</code>接受的参数是新宽度高度与原来的宽度高度的差值。</p>
+<h2 id="超时调用"><a href="#超时调用" class="headerlink" title="超时调用"></a>超时调用</h2><p><code>window</code>对象的<code>setTimeout</code>方法用于超时调用，它接受两个参数：需要执行的代码和以毫秒为单位的时间数值。执行代码可以以字符串或函数的形式进行传参。这个方法的运行效果是使得传入参数的执行代码会在经过一段时间之后才开始执行。传递字符串可能导致性能损失，因此应该尽量以函数的形式传递需要执行的代码。另外，JS是一个单线程的解释器，一定时间内只能执行一段代码，为了控制要执行的代码，就有一个JS任务队列。这些任务会按照它们被添加到队列的顺序执行。<code>setTimeout</code>的第二个参数实际上是告诉JS再过多久之后把当前任务添加到任务队列，如果队列是空的，那么添加后任务就会马上执行，否则还需要等待队列前面的代码执行完之后才执行<code>setTimeout</code>第一个参数里面的任务。也就是说，即便我第二个参数指定为1秒，但是1秒过后任务不一定会准时执行。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以字符串形式传入需要执行的代码，1000毫秒后输出'23333'</span></span><br><span class="line">setTimeout(<span class="string">"console.log('23333')"</span>, <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// 以函数形式传入需要执行的代码，2000毫秒后输出'hehe~'</span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hehe~'</span>);</span><br><span class="line">&#125;, <span class="number">2000</span>);</span><br></pre></td></tr></table></figure></p>
+<p>超时调用其他注意点：调用<code>setTimeout</code>之后会返回一个数值ID，通过这个ID可以来取消某个对应的超时调用。调用<code>clearTimeout</code>，将ID作为参数传入，即可取消该ID所对应的超时调用。超时调用的代码都是在全局作用域中执行，<code>this</code>的值在非严格模式下指向<code>window</code>对象，严格模式下为<code>undefined</code>。</p>
+<h2 id="间歇调用"><a href="#间歇调用" class="headerlink" title="间歇调用"></a>间歇调用</h2><p>间歇调用与超时调用类似，只不过它是按照指定的时间间隔重复执行代码，知道间歇调用被取消或者页面被卸载。设置间歇调用的方法是<code>setInterval</code>，接受的参数与<code>setTimeout</code>相同。<code>setInterval</code>方法也会返回一个ID，对应一个特定的间歇调用。取消间歇调用时，通过<code>clearInterval</code>方法即可完成。间歇调用也是在全局作用域中执行，<code>this</code>的值与超时调用一样。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> ID = <span class="literal">null</span>;</span><br><span class="line">ID = setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(num);</span><br><span class="line">  num += <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (num == <span class="number">5</span>) &#123;</span><br><span class="line">    clearInterval(ID);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="number">500</span>);</span><br></pre></td></tr></table></figure></p>
+<p>一般认为，使用超时调用模拟间歇调用是一种最佳模式，如以下代码示例。在开发环境下，很少使用真正的间歇调用，原因是后一个间歇调用可能会在前一个间歇调用结束之前启动，而使用超时调用，则可以完全避开这个缺点，保证先后顺序。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(num);</span><br><span class="line">  num += <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (num &lt; <span class="number">5</span>) &#123;</span><br><span class="line">    setTimeout(func, <span class="number">500</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">setTimeout(func, <span class="number">500</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="二、location对象"><a href="#二、location对象" class="headerlink" title="二、location对象"></a>二、location对象</h1><p><code>location</code>对象提供了与当前窗口中加载的文档有关的信息，还提供一些导航功能。<code>location</code>对象既是<code>window</code>对象的属性，也是<code>document</code>对象的属性，也就是说，<code>window.location</code>和<code>document.location</code>引用的是同一个对象。<code>location</code>对象可以将URL解析为独立的片段，让开发人员可以通过不同的的属性访问这些片段。下表列出<code>location</code>对象的所有属性并给出例子说明。</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>例子</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hash</td>
+<td>“#contents”</td>
+<td>URL中的hash(#号后面跟着的字符串，锚)</td>
+</tr>
+<tr>
+<td>host</td>
+<td>“www.wrox.com:80”</td>
+<td>服务器名称和端口号</td>
+</tr>
+<tr>
+<td>hostname</td>
+<td>“www.wrox.com”</td>
+<td>服务器名称</td>
+</tr>
+<tr>
+<td>href</td>
+<td>“<a href="http://www.wrox.com" target="_blank" rel="external">http://www.wrox.com</a>“</td>
+<td>完整的URL</td>
+</tr>
+<tr>
+<td>pathname</td>
+<td>“/WileyCDA”</td>
+<td>URL中的路径名</td>
+</tr>
+<tr>
+<td>port</td>
+<td>“80”</td>
+<td>端口号</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>“http”</td>
+<td>协议</td>
+</tr>
+<tr>
+<td>search</td>
+<td>“?q=javascript”</td>
+<td>查询字符串</td>
+</tr>
+</tbody>
+</table>
+<p>查询字符串：通过<code>search</code>属性可以获取查询字符串，但<code>search</code>属性返回的是从问号到URL结尾的所有内容，因此不能很好地方便我们访问查询字符串中的属性。在使用<code>search</code>属性获取查询字符串之后还需要再对其进行解析，然后才可以获取我们想要获得的属性和属性值。可以使用如下代码来解析查询字符串：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getQueryStringArgs</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> qs = (location.search.length &gt; <span class="number">0</span> ? location.search.substring(<span class="number">1</span>) : <span class="string">""</span>);</span><br><span class="line">  <span class="keyword">var</span> args = &#123;&#125;;</span><br><span class="line">  <span class="keyword">var</span> items = qs.length ? qs.split(<span class="string">"&amp;"</span>) : [];</span><br><span class="line">  <span class="keyword">var</span> item = <span class="literal">null</span>, name = <span class="literal">null</span>, value = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; items.length; ++i) &#123;</span><br><span class="line">    item = items[i].split(<span class="string">"="</span>);</span><br><span class="line">    name = <span class="built_in">decodeURIComponent</span>(item[<span class="number">0</span>]); <span class="comment">// 查询字符串一般是被编码过的，所以这里需要解码</span></span><br><span class="line">    value = <span class="built_in">decodeURIComponent</span>(item[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">if</span> (name.length) &#123;</span><br><span class="line">      args[name] = value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> args;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>位置操作：使用<code>location</code>对象可以改变浏览器的位置。下面给出代码示例。每次修改<code>location</code>的属性(<code>hash</code>属性除外)，页面都会以新的URL重新加载，页面刷新后浏览器的历史记录中会生成一条新纪录。如果想要仅跳转页面但是不产生历史记录，可以通过<code>replace</code>方法来实现。最后，<code>location</code>还有一个与位置相关的方法，<code>reload</code>，重新加载页面。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">location.assign(<span class="string">"http://www.wrox.com"</span>);</span><br><span class="line"><span class="built_in">window</span>.location = <span class="string">"http://www.wrox.com"</span>;</span><br><span class="line">location.href = <span class="string">"http://www.wrox.com"</span>;</span><br><span class="line"><span class="comment">// 上面3种示例都是直接修改整个URL，下面给出只修改URL中的某个部分来改变位置的例子</span></span><br><span class="line">location.hash = <span class="string">"#section1"</span>;</span><br><span class="line">location.search = <span class="string">"?q=javascript"</span>;</span><br><span class="line">location.hostname = <span class="string">"www.yahoo.com"</span>;</span><br><span class="line">location.pathname = <span class="string">"mydir"</span>;</span><br><span class="line">location.port = <span class="number">8080</span>;</span><br><span class="line"><span class="comment">// 使用replace不产生历史记录</span></span><br><span class="line">location.replace(<span class="string">"http://www.wrox.com"</span>);</span><br><span class="line"><span class="comment">// 重新加载页面</span></span><br><span class="line">location.reload(); <span class="comment">// 从服务器或浏览器缓存中重新加载</span></span><br><span class="line">location.reload(<span class="literal">true</span>); <span class="comment">// 从服务器重新加载</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hongchh.github.io/2016/JavaScript-window、location对象基础知识整理/" data-id="cjfusq18c000mfktismq0zkgm" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/【分治策略】逆序对问题总结/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            【分治策略】逆序对问题总结
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2016/【分治策略】归并排序算法总结/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">【分治策略】归并排序算法总结</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/试玩NodeJS多进程/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2018-04-11/master-worker.png)" alt="试玩NodeJS多进程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/试玩NodeJS多进程/" class="title">试玩NodeJS多进程</a></p>
+                            <p class="item-date"><time datetime="2018-04-11T07:47:22.000Z" itemprop="datePublished">2018-04-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 洪创煌(hongchh_sysu@qq.com)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

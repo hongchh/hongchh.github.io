@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>axios-cookie问题和表单上传问题探究 | 洪创煌的博客</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Web" />
+    
+    <meta name="description" content="自从入了 Vue 之后，一直在用 axios 这个库来做一些异步请求。最近在跨域、cookie 以及表单上传这几个方面遇到了点小问题，做个简单探究和总结。本文将涉及使用 axios 在跨域情况下成功得到响应报文中的内容以及让 cookie 成功设置的解决办法；使用 axios 上传表单数据时候遇到的小问题。  一、同域 cookie 问题首先来看一个同域情况下的cookie例子清楚整个流程以便后">
+<meta name="keywords" content="Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="axios-cookie问题和表单上传问题探究">
+<meta property="og:url" content="https://hongchh.github.io/2017/axios-cookie问题和表单上传问题探究/index.html">
+<meta property="og:site_name" content="洪创煌的博客">
+<meta property="og:description" content="自从入了 Vue 之后，一直在用 axios 这个库来做一些异步请求。最近在跨域、cookie 以及表单上传这几个方面遇到了点小问题，做个简单探究和总结。本文将涉及使用 axios 在跨域情况下成功得到响应报文中的内容以及让 cookie 成功设置的解决办法；使用 axios 上传表单数据时候遇到的小问题。  一、同域 cookie 问题首先来看一个同域情况下的cookie例子清楚整个流程以便后">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://hongchh.github.io/images/2017-05-24-1.jpg">
+<meta property="og:updated_time" content="2017-11-11T11:18:14.654Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="axios-cookie问题和表单上传问题探究">
+<meta name="twitter:description" content="自从入了 Vue 之后，一直在用 axios 这个库来做一些异步请求。最近在跨域、cookie 以及表单上传这几个方面遇到了点小问题，做个简单探究和总结。本文将涉及使用 axios 在跨域情况下成功得到响应报文中的内容以及让 cookie 成功设置的解决办法；使用 axios 上传表单数据时候遇到的小问题。  一、同域 cookie 问题首先来看一个同域情况下的cookie例子清楚整个流程以便后">
+<meta name="twitter:image" content="https://hongchh.github.io/images/2017-05-24-1.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/css/images/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+
+
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle">生命是一场练习！</p>
+                        </h2>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                        
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-axios-cookie问题和表单上传问题探究" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        axios-cookie问题和表单上传问题探究
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/axios-cookie问题和表单上传问题探究/" class="article-date">
+            <time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time>
+        </a>
+    </div>
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Web/">Web</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>自从入了 Vue 之后，一直在用 axios 这个库来做一些异步请求。最近在跨域、cookie 以及表单上传这几个方面遇到了点小问题，做个简单探究和总结。本文将涉及使用 axios 在跨域情况下成功得到响应报文中的内容以及让 cookie 成功设置的解决办法；使用 axios 上传表单数据时候遇到的小问题。</p>
+</blockquote>
+<h2 id="一、同域-cookie-问题"><a href="#一、同域-cookie-问题" class="headerlink" title="一、同域 cookie 问题"></a>一、同域 cookie 问题</h2><p>首先来看一个同域情况下的<code>cookie</code>例子清楚整个流程以便后面对跨域情况能够更好地阐述。服务端的代码如下，访问<code>/get-cookie</code>接口的时候，通过<code>session</code>随便设置字段<code>time</code>，使得响应报文中带有<code>set-cookie</code>字段，在浏览器段设置<code>cookie</code>，这个<code>cookie</code>的内容即相应的<code>sessionId</code>。然后访问<code>/test-cookie</code>可以判断浏览器端的 <code>cookie</code>是否设置成功，如果设置成功，那么浏览器发送的报文会自动带上<code>cookie</code>字段，服务器也就可以根据<code>cookie</code>找到对应的<code>session</code>。如果设置失败，那么浏览器发送的报文不会带上<code>cookie</code>字段，服务器也就无法找到对应的<code>session</code>，从而返回<code>error</code>。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>)</span><br><span class="line"><span class="keyword">const</span> FileStore = <span class="built_in">require</span>(<span class="string">'session-file-store'</span>)(session)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/static'</span>, express.static(path.join(__dirname, <span class="string">'./static'</span>)))</span><br><span class="line">app.use(cookieParser())</span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  store: <span class="keyword">new</span> FileStore(),</span><br><span class="line">  secret: <span class="string">'hongchh'</span>,</span><br><span class="line">  resave: <span class="literal">false</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">false</span></span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/get-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  req.session.time = <span class="built_in">Date</span>.now()</span><br><span class="line">  res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/test-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.session.time) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'session.time: '</span> + req.session.time)</span><br><span class="line">    <span class="built_in">console</span>.log(req.cookies)</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'error'</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8000</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'http://localhost:8000/static/index.html'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>前端的代码如下，前端只有两个按钮，触发点击事件分别可以调用两个接口。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="string">'usr strict'</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'get-cookie'</span>).addEventListener(<span class="string">'click'</span>, getCookie, <span class="literal">false</span>)</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'test-cookie'</span>).addEventListener(<span class="string">'click'</span>, testCookie, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> getResult = <span class="built_in">document</span>.getElementById(<span class="string">'get-result'</span>)</span><br><span class="line">  <span class="keyword">var</span> testResult = <span class="built_in">document</span>.getElementById(<span class="string">'test-result'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    axios.get(<span class="string">'/get-cookie'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (res.status === <span class="number">200</span>) &#123;</span><br><span class="line">        getResult.textContent = res.data.result</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        getResult.textContent = <span class="string">'ERROR'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">testCookie</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    axios.get(<span class="string">'/test-cookie'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (res.status === <span class="number">200</span>) &#123;</span><br><span class="line">        testResult.textContent = res.data.result</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        testResult.textContent = <span class="string">'ERROR'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先点击<code>get-cookie</code>按钮，再点击<code>test-cookie</code>按钮，发送的报文信息如下，可以看到，<code>get-cookie</code>的响应报文中有<code>set-cookie</code>字段，而<code>test-cookie</code>的请求报文中自动带上了<code>cookie</code>字段。通过 Chrome 的开发者工具也可以看到设置<code>cookie</code>成功。服务端也输出了相应的<code>session</code>和<code>cookie</code>的信息。</p>
+<p><img src="/images/2017-05-24-1.jpg" alt="get-cookie"></p>
+<p><img src="/images/2017-05-24-2.jpg" alt="test-cookie"></p>
+<p><img src="/images/2017-05-24-3.jpg" alt="cookie"></p>
+<p><img src="/images/2017-05-24-4.jpg" alt="终端输出"></p>
+<h2 id="二、跨域-cookie-问题"><a href="#二、跨域-cookie-问题" class="headerlink" title="二、跨域 cookie 问题"></a>二、跨域 cookie 问题</h2><p>为了实现跨域，将服务器拆分成<code>2</code>个服务器，1个提供静态资源，1个提供接口。访问<code>8002</code>端口的服务器加载前端的界面，然后跨域访问<code>8001</code>端口的服务器调用<code>get-cookie</code>和<code>test-cookie</code>接口。为了满足跨域，<code>8001</code>服务器的响应报文里面应该有<code>Access-Control-Allow-Origin</code>字段，字段值设置为<code>&#39;*&#39;</code>表示满足所有其他域的访问。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</span><br><span class="line"><span class="keyword">const</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>)</span><br><span class="line"><span class="keyword">const</span> FileStore = <span class="built_in">require</span>(<span class="string">'session-file-store'</span>)(session)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(cookieParser())</span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  store: <span class="keyword">new</span> FileStore(),</span><br><span class="line">  secret: <span class="string">'hongchh'</span>,</span><br><span class="line">  resave: <span class="literal">false</span>,</span><br><span class="line">  saveUninitialized: <span class="literal">false</span></span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/get-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  req.session.time = <span class="built_in">Date</span>.now()</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br><span class="line">  res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/test-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'*'</span>)</span><br><span class="line">  <span class="keyword">if</span> (req.session.time) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'session.time: '</span> + req.session.time)</span><br><span class="line">    <span class="built_in">console</span>.log(req.cookies)</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'error'</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8001</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'http://localhost:8001/'</span>)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/static'</span>, express.static(path.join(__dirname, <span class="string">'./static'</span>)))</span><br><span class="line">app.listen(<span class="number">8002</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'http://localhost:8002/'</span>)</span><br></pre></td></tr></table></figure>
+<p>前端只需要小做修改，将调用接口的 URL 改为绝对地址。下面是<code>get-cookie</code>的写法，<code>test-cookie</code>也类似。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  axios.get(<span class="string">'http://localhost:8001/get-cookie'</span>).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (res.status === <span class="number">200</span>) &#123;</span><br><span class="line">      getResult.textContent = res.data.result</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      getResult.textContent = <span class="string">'ERROR'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样地，先<code>get-cookie</code>，然后<code>test-cookie</code>，得到的结果如下。访问没有出错，但是也没有成功设置<code>cookie</code>。可以看到<code>get-cookie</code>的响应报文里面是有<code>set-cookie</code>字段的，但是<code>test-cookie</code>的请求报文并没有带上<code>cookie</code>字段。通过 Chrome 的开发者工具也可以看到<code>cookie</code>没有设置成功。</p>
+<p><img src="/images/2017-05-24-5.jpg" alt="get-cookie"></p>
+<p><img src="/images/2017-05-24-6.jpg" alt="test-cookie"></p>
+<p><img src="/images/2017-05-24-7.jpg" alt="cookie"></p>
+<p>查看<code>axios</code>的文档之后，发现需要配置<code>withCredentials</code>属性，在全局配置<code>axios</code>的<code>withCredentials</code>属性为<code>true</code>。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axios.defaults.withCredentials = <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>配置完成之后再进行测试，得到的结果如下。确实成功设置了<code>cookie</code>，<code>test-cookie</code>的请求报文会自动带上<code>cookie</code>。但是前端除了成功设置<code>cookie</code>之外，还会报错，而且无法读取到响应报文的主体部分的内容。</p>
+<p><img src="/images/2017-05-24-8.jpg" alt="get-cookie"></p>
+<p><img src="/images/2017-05-24-9.jpg" alt="test-cookie"></p>
+<p><img src="/images/2017-05-24-10.jpg" alt="报错信息"></p>
+<p><img src="/images/2017-05-24-11.jpg" alt="无法读取响应内容"></p>
+<p>根据错误提示，应该是说不能直接将<code>Access-Control-Allow-Origin</code>字段的值设置为<code>&#39;*&#39;</code>。因此，我们直接将其值修改为确定的域名试试。对<code>get-cookie</code>和<code>test-cookie</code>作如下修改。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">'/get-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  req.session.time = <span class="built_in">Date</span>.now()</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'http://localhost:8002'</span>)</span><br><span class="line">  res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/test-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'http://localhost:8002'</span>)</span><br><span class="line">  <span class="keyword">if</span> (req.session.time) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'session.time: '</span> + req.session.time)</span><br><span class="line">    <span class="built_in">console</span>.log(req.cookies)</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'error'</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>继续进行测试，得到的结果跟之前相似，成功设置了<code>cookie</code>，但却无法获取响应报文的主体部分的内容，并且继续报错了。其他内容相似这里不重复截图。只有这个报错的信息是不同的，如下图所示。看样子修改为确定的域名成功解决了之前那个问题，接下来需要解决这新的问题。</p>
+<p><img src="/images/2017-05-24-12.jpg" alt="报错信息"></p>
+<p>根据报错提示，是说除了<code>Access-Control-Allow-Origin</code>字段之外，我们还需要设置<code>Access-Control-Allow-Credentials</code>的值为<code>true</code>。根据提示对服务端代码进行修改，如下所示。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">'/get-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  req.session.time = <span class="built_in">Date</span>.now()</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'http://localhost:8002'</span>)</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Credentials'</span>, <span class="string">'true'</span>)</span><br><span class="line">  res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'/test-cookie'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Origin'</span>, <span class="string">'http://localhost:8002'</span>)</span><br><span class="line">  res.header(<span class="string">'Access-Control-Allow-Credentials'</span>, <span class="string">'true'</span>)</span><br><span class="line">  <span class="keyword">if</span> (req.session.time) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'session.time: '</span> + req.session.time)</span><br><span class="line">    <span class="built_in">console</span>.log(req.cookies)</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'ok'</span> &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.json(&#123; <span class="attr">result</span>: <span class="string">'error'</span> &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>继续进行测试，得到结果如下。这次除了可以正确设置<code>cookie</code>之外，也可以读取到响应报文的主体部分的内容，并且没有任何报错。</p>
+<p><img src="/images/2017-05-24-13.jpg" alt="get-cookie"></p>
+<p><img src="/images/2017-05-24-14.jpg" alt="test-cookie"></p>
+<p><img src="/images/2017-05-24-15.jpg" alt="终端输出"></p>
+<p>因此，可以得到结论，在跨域的情况下使用<code>axios</code>，首先需要配置<code>axios</code>的<code>withCredentials</code>属性为<code>true</code>。然后服务器还需要配置响应报文头部的 <code>Access-Control-Allow-Origin</code>和<code>Access-Control-Allow-Credentials</code>两个字段，<code>Access-Control-Allow-Origin</code>字段的值需要为确定的域名，而不能直接用<code>&#39;*&#39;</code>代替，<code>Access-Control-Allow-Credentials</code>的值需要设置为<code>true</code>。前端和服务端两边都配置完善之后就可以正常进行跨域访问以及携带<code>cookie</code>信息了。</p>
+<h2 id="三、表单上传问题"><a href="#三、表单上传问题" class="headerlink" title="三、表单上传问题"></a>三、表单上传问题</h2><p>之前在使用<code>axios</code>上传表单数据的过程中，我通常像下面会这么做。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = &#123;</span><br><span class="line">  key1: <span class="string">'value1'</span>,</span><br><span class="line">  key2: <span class="string">'value2'</span>,</span><br><span class="line">  key3: <span class="string">'value3'</span></span><br><span class="line">&#125;</span><br><span class="line">axios.post(<span class="string">'/upload'</span>, formData).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (res.status === <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>上面这种做法在<code>NodeJS express</code>服务端使用<code>body-parser</code>可以正确解析到请求报文里面<code>body</code>部分的数据，也就是我提交的表单数据，所以这样玩了很久也没有出现过什么问题。直到最近在课程作业中跟1个<code>Python flask</code>后台的同学协作过程中才开始踩到坑。用上面那种方式提交的数据，在他的后台程序里面提取不到表单数据。他的后台通过 <code>req.form</code>的方式获取表单数据，跟<code>express</code>的<code>req.body</code>好像有那么一点不同。于是我猜想<code>express</code>的<code>body-parser</code>中间件是把报文的主体部分的数据都提取了出来，而他的<code>req.form</code>只会提取标准的表单数据。通过修改axios <code>post</code>的数据也可以验证猜想。代码修改如下，使用 js 提供的<code>FormData</code>来包装需要提交的表单数据。最后服务器也成功收到了前端上传的数据。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formData = <span class="keyword">new</span> FormData()</span><br><span class="line">formData.append(<span class="string">'key1'</span>, <span class="string">'value1'</span>)</span><br><span class="line">formData.append(<span class="string">'key2'</span>, <span class="string">'value2'</span>)</span><br><span class="line">formData.append(<span class="string">'key3'</span>, <span class="string">'value3'</span>)</span><br><span class="line">axios.post(<span class="string">'/upload'</span>, formData).then(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (res.status === <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这时候大概可以简单理解一下两者区别，第一种方式是 post 了一个 js 对象，会被变成<code>json 字符串</code>的形式提交。而第二种则是提交了一个<code>FormData对象</code>，标准的表单数据对象。因此，如果在 Java、PHP 等其他后台遇到类似的问题时，也可以考虑尝试用<code>FormData对象</code>来解决。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hongchh.github.io/2017/axios-cookie问题和表单上传问题探究/" data-id="cjfusq196001nfktig22l6rq6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/hongchh" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            MonkeyEye电影售票系统-前端项目结构和协作规范
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/Ajax文件上传/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Ajax文件上传</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/试玩NodeJS多进程/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2018-04-11/master-worker.png)" alt="试玩NodeJS多进程" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/试玩NodeJS多进程/" class="title">试玩NodeJS多进程</a></p>
+                            <p class="item-date"><time datetime="2018-04-11T07:47:22.000Z" itemprop="datePublished">2018-04-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-23.jpg)" alt="MonkeyEye电影售票系统-性能优化总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-性能优化总结/" class="title">MonkeyEye电影售票系统-性能优化总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T07:43:09.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-5.jpg)" alt="MonkeyEye电影售票系统-前端技术要点总结" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端技术要点总结/" class="title">MonkeyEye电影售票系统-前端技术要点总结</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T05:30:02.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-06-09-1.png)" alt="MonkeyEye电影售票系统-前端项目结构和协作规范" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/MonkeyEye电影售票系统-前端项目结构和协作规范/" class="title">MonkeyEye电影售票系统-前端项目结构和协作规范</a></p>
+                            <p class="item-date"><time datetime="2017-06-09T02:45:50.000Z" itemprop="datePublished">2017-06-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/axios-cookie问题和表单上传问题探究/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/2017-05-24-1.jpg)" alt="axios-cookie问题和表单上传问题探究" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/axios-cookie问题和表单上传问题探究/" class="title">axios-cookie问题和表单上传问题探究</a></p>
+                            <p class="item-date"><time datetime="2017-05-24T06:02:11.000Z" itemprop="datePublished">2017-05-24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJS/">NodeJS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/JavaScript/" style="font-size: 20px;">JavaScript</a> <a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a> <a href="/tags/Web/" style="font-size: 18px;">Web</a> <a href="/tags/其他/" style="font-size: 12px;">其他</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/数据结构与算法/" style="font-size: 16px;">数据结构与算法</a> <a href="/tags/计算机网络/" style="font-size: 14px;">计算机网络</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.csdn.net/hongchh">CSDN</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 洪创煌(hongchh_sysu@qq.com)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
