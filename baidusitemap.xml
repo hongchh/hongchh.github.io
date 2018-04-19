@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>https://hongchh.github.io/2016/NodeJS%E5%9F%BA%E7%A1%80API%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2018-04-16T07:51:04.344Z</lastmod>
+    <loc>https://hongchh.github.io/2018/NodeJS-Cpp-Addons%E4%B9%8BC-%E7%B1%BB%E5%AE%9E%E4%BE%8B%E5%8C%85%E8%A3%85%E4%B8%8E%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2018-04-19T09:25:03.030Z</lastmod>
     <data>
         <display>
-        <title>NodeJS基础API搭建服务器详细过程记录</title>
-        <pubTime>2016-11-14T12:45:50.000Z</pubTime>
+        <title>NodeJS C++ Addons之C++类实例包装与异步操作</title>
+        <pubTime>2018-04-19T09:20:27.000Z</pubTime>
         
         <tag>NodeJS</tag>
          
@@ -21,12 +21,29 @@
 
     
   <url>
-    <loc>https://hongchh.github.io/2018/NodeJS-C-Addons%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2018-04-16T07:50:44.593Z</lastmod>
+    <loc>https://hongchh.github.io/2018/NodeJS-Cpp-Addons%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2018-04-19T09:20:51.310Z</lastmod>
     <data>
         <display>
         <title>NodeJS C++ Addons基础</title>
         <pubTime>2018-04-16T07:45:57.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://hongchh.github.io/2016/NodeJS%E5%9F%BA%E7%A1%80API%E6%90%AD%E5%BB%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2018-04-16T07:51:04.344Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS基础API搭建服务器详细过程记录</title>
+        <pubTime>2016-11-14T12:45:50.000Z</pubTime>
         
         <tag>NodeJS</tag>
          
